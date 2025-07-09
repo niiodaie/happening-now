@@ -1,0 +1,32 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/news.js": {
+      "maxDuration": 30
+    },
+    "api/trends.js": {
+      "maxDuration": 30
+    },
+    "api/subscribe.js": {
+      "maxDuration": 10
+    }
+  },
+  "env": {
+    "NEWSAPI_KEY": "e5d61af9dc354abfa6e2f7a009ba6daf"
+  }
+}
+
