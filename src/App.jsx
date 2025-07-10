@@ -9,11 +9,14 @@ import { TrendingTopics } from './components/TrendingTopics'
 import { SubscribeForm } from './components/SubscribeForm'
 import Footer from './components/Footer'
 import LanguageSwitcher from './components/LanguageSwitcher'
-import { HeaderAd, SidebarAd, ArticleAd } from './components/AdSlot'
+// import { HeaderAd, SidebarAd, ArticleAd } from './components/AdSlot' // temporarily disabled to fix 400s
 import LoadingFallback from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
 import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, Share } from 'lucide-react'
+import { I18nextProvider } from 'react-i18next'
+import i18n from './i18n'
+
 
 // Enhanced error logging utility
 const logError = (context, error, additionalInfo = {}) => {
