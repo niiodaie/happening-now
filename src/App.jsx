@@ -1,15 +1,19 @@
 import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNews } from './hooks/useNews'
 import { NewsCard } from './components/NewsCard'
 import { LoadingCard } from './components/LoadingCard'
 import { FilterTabs } from './components/FilterTabs'
 import { TrendingTopics } from './components/TrendingTopics'
 import { SubscribeForm } from './components/SubscribeForm'
+import Footer from './components/Footer'
+import LanguageSwitcher from './components/LanguageSwitcher'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
 import { Newspaper, RefreshCw, Clock, AlertCircle } from 'lucide-react'
 
 function App() {
+  const { t } = useTranslation()
   const { articles, trends, loading, error, lastUpdated, availableTags, refetch } = useNews()
   const [selectedTag, setSelectedTag] = useState('All')
   const [refreshing, setRefreshing] = useState(false)
@@ -39,16 +43,18 @@ function App() {
                 <Newspaper className="h-6 w-6 text-orange-600" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Happening Now</h1>
-                <p className="text-sm text-gray-600">Real-time news updates</p>
+                <h1 className="text-xl font-bold text-gray-900">{t('app.title')}</h1>
+                <p className="text-sm text-gray-600">{t('app.subtitle')}</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
+              <LanguageSwitcher />
+              
               {lastUpdated && (
                 <div className="hidden sm:flex items-center gap-1 text-sm text-gray-500">
                   <Clock className="h-4 w-4" />
-                  <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
+                  <span>{t('app.lastUpdated', { time: lastUpdated.toLocaleTimeString() })}</span>
                 </div>
               )}
               
@@ -60,7 +66,7 @@ function App() {
                 className="flex items-center gap-2"
               >
                 <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-                Refresh
+                {t('app.refresh')}
               </Button>
             </div>
           </div>
@@ -148,6 +154,9 @@ function App() {
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
