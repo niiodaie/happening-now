@@ -1,112 +1,125 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardContent, CardHeader } from './ui/card'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
-import { X, Flame, ExternalLink, Clock, Star, TrendingUp, Zap, ShoppingCart } from 'lucide-react'
+import { X, Flame, ExternalLink, Clock, Star, TrendingUp, Zap, ShoppingCart, Filter } from 'lucide-react'
 
-const HotDeals = ({ isOpen, onClose }) => {
+const HotDeals = ({ isOpen, onClose, deals = [] }) => {
+  const { t } = useTranslation()
   const [selectedCategory, setSelectedCategory] = useState('All')
   
-  // Mock deals data - professional and news-worthy
-  const deals = [
+  // Default mock deals if none provided
+  const defaultDeals = [
     {
       id: 1,
-      title: "Professional Noise-Canceling Headphones",
-      description: "Premium audio quality for journalists and remote workers",
-      originalPrice: 299,
-      salePrice: 194,
-      discount: 35,
+      title: "Amazon Echo Dot - 55% Off",
+      description: "Smart speaker with Alexa - Perfect for news updates",
+      originalPrice: 49.99,
+      salePrice: 22.49,
+      discount: 55,
       category: "Tech",
       rating: 4.8,
-      reviews: 2847,
+      reviews: 12847,
       timeLeft: "6h 23m",
       isHot: true,
-      image: "🎧",
-      url: "#"
+      image: "🔊",
+      url: "https://amzn.to/example-link"
     },
     {
       id: 2,
-      title: "Ergonomic Laptop Stand",
-      description: "Improve your workspace setup for better productivity",
-      originalPrice: 89,
-      salePrice: 67,
-      discount: 25,
-      category: "Office",
+      title: "Wireless Noise-Canceling Headphones",
+      description: "Premium audio quality for focused news reading",
+      originalPrice: 199.99,
+      salePrice: 89.99,
+      discount: 55,
+      category: "Tech",
       rating: 4.6,
-      reviews: 1523,
+      reviews: 8523,
       timeLeft: "12h 45m",
       isHot: false,
-      image: "💻",
-      url: "#"
+      image: "🎧",
+      url: "https://amzn.to/example-link"
     },
     {
       id: 3,
-      title: "Wireless Charging Pad",
-      description: "Fast charging for smartphones and devices",
-      originalPrice: 49,
-      salePrice: 29,
-      discount: 41,
-      category: "Tech",
+      title: "Ergonomic Laptop Stand",
+      description: "Improve your workspace for better productivity",
+      originalPrice: 79.99,
+      salePrice: 39.99,
+      discount: 50,
+      category: "Office",
       rating: 4.4,
-      reviews: 892,
+      reviews: 3892,
       timeLeft: "2h 15m",
       isHot: true,
-      image: "⚡",
-      url: "#"
+      image: "💻",
+      url: "https://amzn.to/example-link"
     },
     {
       id: 4,
       title: "Blue Light Blocking Glasses",
       description: "Reduce eye strain during long reading sessions",
-      originalPrice: 79,
-      salePrice: 47,
-      discount: 40,
+      originalPrice: 59.99,
+      salePrice: 24.99,
+      discount: 58,
       category: "Health",
       rating: 4.5,
-      reviews: 1247,
+      reviews: 5247,
       timeLeft: "8h 30m",
       isHot: false,
       image: "👓",
-      url: "#"
+      url: "https://amzn.to/example-link"
     },
     {
       id: 5,
-      title: "Portable Phone Tripod",
-      description: "Perfect for video calls and content creation",
-      originalPrice: 35,
-      salePrice: 21,
-      discount: 40,
-      category: "Tech",
-      rating: 4.3,
-      reviews: 634,
-      timeLeft: "4h 12m",
-      isHot: true,
-      image: "📱",
-      url: "#"
-    },
-    {
-      id: 6,
       title: "Premium Coffee Subscription",
       description: "Fuel your news reading with artisan coffee",
-      originalPrice: 45,
-      salePrice: 32,
-      discount: 29,
+      originalPrice: 45.00,
+      salePrice: 29.99,
+      discount: 33,
       category: "Lifestyle",
       rating: 4.7,
-      reviews: 956,
+      reviews: 2156,
       timeLeft: "24h 00m",
       isHot: false,
       image: "☕",
-      url: "#"
+      url: "https://amzn.to/example-link"
+    },
+    {
+      id: 6,
+      title: "Portable Phone Charger",
+      description: "Never miss breaking news with reliable power",
+      originalPrice: 39.99,
+      salePrice: 19.99,
+      discount: 50,
+      category: "Tech",
+      rating: 4.3,
+      reviews: 7634,
+      timeLeft: "4h 12m",
+      isHot: true,
+      image: "🔋",
+      url: "https://amzn.to/example-link"
     }
   ]
 
-  const categories = ['All', 'Tech', 'Office', 'Health', 'Lifestyle']
+  const activeDeals = deals.length > 0 ? deals : defaultDeals
+  const categories = ['All', ...new Set(activeDeals.map(deal => deal.category))]
 
   // Filter deals by category
   const filteredDeals = selectedCategory === 'All' 
-    ? deals 
-    : deals.filter(deal => deal.category === selectedCategory)
+    ? activeDeals 
+    : activeDeals.filter(deal => deal.category === selectedCategory)
+
+  // Safe translation function
+  const safeT = (key, options = {}) => {
+    try {
+      return t(key, options) || key.split('.').pop()
+    } catch (error) {
+      console.warn('Translation failed for key:', key)
+      return key.split('.').pop()
+    }
+  }
 
   // Close modal on escape key
   useEffect(() => {
@@ -130,10 +143,12 @@ const HotDeals = ({ isOpen, onClose }) => {
   // Handle deal click
   const handleDealClick = (deal) => {
     try {
-      // In a real app, this would navigate to the affiliate link
-      console.log('Deal clicked:', deal.title)
-      // For now, just show an alert
-      alert(`Redirecting to ${deal.title} deal...`)
+      if (deal.url && deal.url !== '#') {
+        window.open(deal.url, '_blank', 'noopener,noreferrer')
+      } else {
+        console.log('Deal clicked:', deal.title)
+        alert(`Redirecting to ${deal.title} deal...`)
+      }
     } catch (error) {
       console.error('Error handling deal click:', error)
     }
@@ -150,7 +165,7 @@ const HotDeals = ({ isOpen, onClose }) => {
       />
       
       {/* Modal */}
-      <div className="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden animate-fade-in">
+      <div className="relative bg-white rounded-lg shadow-2xl max-w-5xl w-full mx-4 max-h-[90vh] overflow-hidden animate-fade-in">
         {/* Header */}
         <div className="bg-gradient-to-r from-orange-500 to-red-600 text-white p-6">
           <div className="flex items-center justify-between">
@@ -159,9 +174,9 @@ const HotDeals = ({ isOpen, onClose }) => {
                 <Flame className="h-6 w-6" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">🔥 Hot Deals</h2>
+                <h2 className="text-2xl font-bold">🔥 {safeT('hotDeals.title') || 'Hot Deals'}</h2>
                 <p className="text-orange-100 text-sm">
-                  Exclusive offers for our news readers
+                  {safeT('hotDeals.subtitle') || 'Exclusive offers for our news readers'}
                 </p>
               </div>
             </div>
@@ -169,7 +184,7 @@ const HotDeals = ({ isOpen, onClose }) => {
             <div className="flex items-center gap-3">
               <Badge className="bg-white/20 text-white border-white/30 animate-pulse">
                 <TrendingUp className="h-3 w-3 mr-1" />
-                Limited Time
+                {safeT('hotDeals.limitedTime') || 'Limited Time'}
               </Badge>
               
               <Button
@@ -177,7 +192,7 @@ const HotDeals = ({ isOpen, onClose }) => {
                 size="sm"
                 onClick={onClose}
                 className="text-white hover:bg-white/20 rounded-full p-2"
-                title="Close deals"
+                title={safeT('hotDeals.close') || 'Close deals'}
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -186,6 +201,10 @@ const HotDeals = ({ isOpen, onClose }) => {
           
           {/* Category Filter */}
           <div className="mt-4 flex flex-wrap gap-2">
+            <div className="flex items-center gap-2 mr-3">
+              <Filter className="h-4 w-4" />
+              <span className="text-sm font-medium">{safeT('hotDeals.filter') || 'Filter'}:</span>
+            </div>
             {categories.map((category) => (
               <Button
                 key={category}
@@ -208,84 +227,82 @@ const HotDeals = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDeals.map((deal) => (
               <Card 
                 key={deal.id}
-                className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 border-l-orange-500"
+                className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-l-4 border-l-orange-500 hover:-translate-y-1"
                 onClick={() => handleDealClick(deal)}
               >
                 <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-3 mb-3">
                     {/* Product Image/Icon */}
-                    <div className="text-3xl flex-shrink-0">
+                    <div className="text-2xl flex-shrink-0">
                       {deal.image}
                     </div>
                     
                     {/* Deal Info */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <h3 className="font-bold text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2">
-                            {deal.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {deal.description}
-                          </p>
-                        </div>
+                        <h3 className="font-bold text-gray-900 group-hover:text-orange-600 transition-colors line-clamp-2 text-sm">
+                          {deal.title}
+                        </h3>
                         
                         {deal.isHot && (
-                          <Badge className="bg-red-100 text-red-700 border-red-200 ml-2 flex-shrink-0">
+                          <Badge className="bg-red-100 text-red-700 border-red-200 ml-2 flex-shrink-0 text-xs">
                             <Flame className="h-3 w-3 mr-1" />
                             HOT
                           </Badge>
                         )}
                       </div>
                       
+                      <p className="text-xs text-gray-600 mb-2 line-clamp-2">
+                        {deal.description}
+                      </p>
+                      
                       {/* Rating and Reviews */}
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2 mb-2">
                         <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                          <span className="text-sm font-medium text-gray-700">
+                          <Star className="h-3 w-3 text-yellow-500 fill-current" />
+                          <span className="text-xs font-medium text-gray-700">
                             {deal.rating}
                           </span>
                         </div>
-                        <span className="text-sm text-gray-500">
-                          ({deal.reviews.toLocaleString()} reviews)
+                        <span className="text-xs text-gray-500">
+                          ({deal.reviews?.toLocaleString()} reviews)
                         </span>
                       </div>
                       
                       {/* Pricing */}
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-2xl font-bold text-green-600">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg font-bold text-green-600">
                           ${deal.salePrice}
                         </span>
-                        <span className="text-lg text-gray-500 line-through">
+                        <span className="text-sm text-gray-500 line-through">
                           ${deal.originalPrice}
                         </span>
-                        <Badge className="bg-green-100 text-green-700 border-green-200">
+                        <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
                           -{deal.discount}%
                         </Badge>
                       </div>
                       
                       {/* Time Left and Action */}
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-sm text-orange-600">
-                          <Clock className="h-4 w-4" />
+                        <div className="flex items-center gap-1 text-xs text-orange-600">
+                          <Clock className="h-3 w-3" />
                           <span className="font-medium">{deal.timeLeft} left</span>
                         </div>
                         
                         <Button 
                           size="sm"
-                          className="bg-orange-600 hover:bg-orange-700 text-white group-hover:scale-105 transition-transform"
+                          className="bg-orange-600 hover:bg-orange-700 text-white group-hover:scale-105 transition-transform text-xs px-2 py-1 h-auto"
                           onClick={(e) => {
                             e.stopPropagation()
                             handleDealClick(deal)
                           }}
                         >
-                          <ShoppingCart className="h-4 w-4 mr-1" />
-                          Buy Now
-                          <ExternalLink className="h-3 w-3 ml-1" />
+                          <ShoppingCart className="h-3 w-3 mr-1" />
+                          {safeT('hotDeals.buyNow') || 'Buy Now'}
                         </Button>
                       </div>
                     </div>
@@ -301,10 +318,10 @@ const HotDeals = ({ isOpen, onClose }) => {
                 <ShoppingCart className="h-12 w-12 mx-auto" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-1">
-                No deals found
+                {safeT('hotDeals.noDeals') || 'No deals found'}
               </h3>
               <p className="text-gray-600">
-                Try selecting a different category
+                {safeT('hotDeals.tryDifferentCategory') || 'Try selecting a different category'}
               </p>
             </div>
           )}
@@ -315,7 +332,7 @@ const HotDeals = ({ isOpen, onClose }) => {
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
               <Zap className="h-4 w-4 inline mr-1" />
-              Deals update every hour • Affiliate partnerships help support our news coverage
+              {safeT('hotDeals.disclaimer') || 'Deals update every hour • Affiliate partnerships help support our news coverage'}
             </div>
             
             <Button
@@ -324,7 +341,7 @@ const HotDeals = ({ isOpen, onClose }) => {
               onClick={onClose}
               className="border-gray-300"
             >
-              Close
+              {safeT('hotDeals.close') || 'Close'}
             </Button>
           </div>
         </div>
