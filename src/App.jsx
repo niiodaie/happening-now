@@ -10,60 +10,71 @@ import { SubscribeForm } from './components/SubscribeForm'
 import Footer from './components/Footer'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import { HeaderAd, SidebarAd, ArticleAd } from './components/AdSlot'
-import LoadingFallback from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
-import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff } from 'lucide-react'
+import { Newspaper, RefreshCw, Clock, AlertCircle, WifiOff } from 'lucide-react'
 
 function App() {
   const { t } = useTranslation()
   const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
   const [appError, setAppError] = useState(null)
-  
-  // Safe geo-location hook usage with error handling
+
+  // WhatsApp + Web Share fallback
+  const handleShare = ({ title = document.title, url = window.location.href } = {}) => {
+    try {
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => openWhatsAppFallback(title, url))
+      } else {
+        openWhatsAppFallback(title, url)
+      }
+    } catch (e) {
+      openWhatsAppFallback(title, url)
+    }
+  }
+
+  const openWhatsAppFallback = (title, url) => {
+    const link = `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`
+    window.open(link, '_blank')
+  }
+
   try {
     useGeoLocation()
-  } catch (error) {
-    console.warn('Geo-location failed:', error)
+  } catch (e) {
+    console.warn('Geo-location failed:', e)
   }
-  
-  const { 
-    articles = [], 
-    trends = [], 
-    loading = false, 
-    error, 
-    lastUpdated, 
-    availableTags = [], 
-    refetch 
+
+  const {
+    articles = [],
+    trends = [],
+    loading = false,
+    error,
+    lastUpdated,
+    availableTags = [],
+    refetch,
   } = useNews() || {}
-  
+
   const [selectedTag, setSelectedTag] = useState('All')
   const [refreshing, setRefreshing] = useState(false)
 
-  // Monitor online status
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
-    
+
     window.addEventListener('online', handleOnline)
     window.addEventListener('offline', handleOffline)
-    
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
     }
   }, [])
 
-  // Filter articles by selected tag with safe array handling
   const filteredArticles = useMemo(() => {
     try {
       if (!Array.isArray(articles)) return []
       if (selectedTag === 'All') return articles
-      return articles.filter(article => 
-        article?.tags && Array.isArray(article.tags) && article.tags.includes(selectedTag)
-      )
-    } catch (error) {
-      console.error('Error filtering articles:', error)
+      return articles.filter((a) => a?.tags?.includes?.(selectedTag))
+    } catch (e) {
+      console.warn('Filter error:', e)
       return []
     }
   }, [articles, selectedTag])
@@ -72,73 +83,49 @@ function App() {
     try {
       setRefreshing(true)
       setAppError(null)
-      if (refetch && typeof refetch === 'function') {
-        await refetch()
-      }
-    } catch (error) {
-      console.error('Refresh failed:', error)
+      if (typeof refetch === 'function') await refetch()
+    } catch (e) {
       setAppError('Failed to refresh. Please try again.')
     } finally {
       setRefreshing(false)
     }
   }
 
-  const handleTagSelect = (tag) => {
-    try {
-      setSelectedTag(tag || 'All')
-    } catch (error) {
-      console.error('Error selecting tag:', error)
-      setSelectedTag('All')
-    }
-  }
-
-  // Safe translation function
   const safeT = (key, options = {}) => {
     try {
       return t(key, options)
-    } catch (error) {
-      console.warn('Translation failed for key:', key)
-      return key.split('.').pop() // Return the last part of the key as fallback
+    } catch {
+      return key.split('.').pop()
     }
   }
 
-  // Offline state
+  // Offline UI
   if (!isOnline) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="max-w-md mx-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="max-w-md mx-auto">
           <CardContent className="text-center p-8">
-            <WifiOff className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">You're offline</h2>
-            <p className="text-gray-600 mb-4">
-              Please check your internet connection and try again.
-            </p>
-            <Button onClick={() => window.location.reload()}>
-              Try Again
-            </Button>
+            <WifiOff className="w-10 h-10 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold">You're offline</h2>
+            <p className="text-gray-600 mb-4">Please check your connection.</p>
+            <Button onClick={() => window.location.reload()}>Try Again</Button>
           </CardContent>
         </Card>
       </div>
     )
   }
 
-  // App error state
+  // App error UI
   if (appError) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="max-w-md mx-4 border-red-200">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="max-w-md mx-auto border-red-200">
           <CardContent className="text-center p-8">
-            <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h2>
+            <AlertCircle className="w-10 h-10 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold">Something went wrong</h2>
             <p className="text-gray-600 mb-4">{appError}</p>
-            <div className="space-y-2">
-              <Button onClick={() => window.location.reload()} className="w-full">
-                Refresh Page
-              </Button>
-              <Button variant="outline" onClick={() => setAppError(null)} className="w-full">
-                Try Again
-              </Button>
-            </div>
+            <Button className="w-full mb-2" onClick={() => window.location.reload()}>Refresh Page</Button>
+            <Button variant="outline" className="w-full" onClick={() => setAppError(null)}>Try Again</Button>
           </CardContent>
         </Card>
       </div>
@@ -148,67 +135,46 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white rounded-lg border">
-                <img 
-                  src="/logo.png" 
-                  alt="HN Logo" 
-                  className="h-8 w-8"
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'block'
-                  }}
-                />
-                <Newspaper className="h-8 w-8 text-blue-600" style={{ display: 'none' }} />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">
-                  {safeT('app.title') || 'Happening Now'}
-                </h1>
-                <p className="text-sm text-gray-600">
-                  {safeT('app.subtitle') || 'Real-time news from around the world'}
-                </p>
-              </div>
+      <header className="bg-white border-b sticky top-0 z-50 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex gap-3 items-center">
+            <div className="p-2 bg-white rounded-lg border">
+              <img
+                src="/logo.png"
+                alt="HN Logo"
+                className="h-8 w-8"
+                onError={(e) => {
+                  e.target.style.display = 'none'
+                  e.target.nextSibling.style.display = 'block'
+                }}
+              />
+              <Newspaper className="h-8 w-8 text-blue-600" style={{ display: 'none' }} />
             </div>
-            
-            <div className="flex items-center gap-3">
-              <LanguageSwitcher />
-              
-              {lastUpdated && (
-                <div className="hidden sm:flex items-center gap-1 text-sm text-gray-500">
-                  <Clock className="h-4 w-4" />
-                  <span>
-                    {safeT('app.lastUpdated', { 
-                      time: lastUpdated?.toLocaleTimeString?.() || 'Unknown' 
-                    }) || `Updated: ${lastUpdated?.toLocaleTimeString?.() || 'Unknown'}`}
-                  </span>
-                </div>
-              )}
-              
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleRefresh}
-                disabled={refreshing}
-                className="flex items-center gap-2"
-              >
-                <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-                {safeT('app.refresh') || 'Refresh'}
-              </Button>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">{safeT('app.title') || 'Happening Now'}</h1>
+              <p className="text-sm text-gray-600">{safeT('app.subtitle') || 'Real-time news from around the world'}</p>
             </div>
+          </div>
+          <div className="flex gap-3 items-center">
+            <LanguageSwitcher />
+            {lastUpdated && (
+              <div className="text-sm text-gray-500 hidden sm:flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                <span>{safeT('app.lastUpdated', { time: lastUpdated?.toLocaleTimeString?.() })}</span>
+              </div>
+            )}
+            <Button variant="outline" size="sm" onClick={handleRefresh} disabled={refreshing}>
+              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+              {safeT('app.refresh') || 'Refresh'}
+            </Button>
           </div>
         </div>
       </header>
 
-      {/* Header Ad */}
       <HeaderAd />
 
-      {/* Main Content */}
+      {/* Main */}
       <main className="max-w-6xl mx-auto px-4 py-6">
-        {/* Error State */}
         {error && (
           <Card className="mb-6 border-red-200 bg-red-50">
             <CardContent className="flex items-center gap-3 p-4">
@@ -224,78 +190,42 @@ function App() {
           </Card>
         )}
 
-        {/* Trending Topics */}
-        {!loading && Array.isArray(trends) && trends.length > 0 && (
-          <TrendingTopics trends={trends} loading={loading} />
-        )}
-
-        {/* Article Ad */}
+        {trends.length > 0 && <TrendingTopics trends={trends} loading={loading} />}
         <ArticleAd />
 
-        {/* Filter Tabs */}
-        {!loading && Array.isArray(availableTags) && availableTags.length > 0 && (
-          <FilterTabs 
-            tags={availableTags}
-            selectedTag={selectedTag}
-            onTagSelect={handleTagSelect}
-          />
-        )}
+        <FilterTabs
+          tags={availableTags}
+          selectedTag={selectedTag}
+          onTagSelect={(tag) => setSelectedTag(tag || 'All')}
+        />
 
-        {/* Article Count */}
         {!loading && (
-          <div className="mb-4">
-            <p className="text-sm text-gray-600">
-              Showing {filteredArticles?.length || 0} article{(filteredArticles?.length || 0) !== 1 ? 's' : ''}
-              {selectedTag !== 'All' && ` tagged with "${selectedTag}"`}
-            </p>
+          <div className="mb-4 text-sm text-gray-600">
+            Showing {filteredArticles.length} article{filteredArticles.length !== 1 ? 's' : ''}
+            {selectedTag !== 'All' && ` tagged with "${selectedTag}"`}
           </div>
         )}
 
-        {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {loading ? (
-            // Loading state
-            Array.from({ length: 6 }).map((_, index) => (
-              <LoadingCard key={index} />
-            ))
-          ) : Array.isArray(filteredArticles) && filteredArticles.length > 0 ? (
-            // Articles
-            filteredArticles.map((article, index) => (
-              <NewsCard key={article?.id || index} article={article} />
-            ))
-          ) : (
-            // No articles state
-            <div className="col-span-full text-center py-12">
-              <div className="text-gray-400 mb-4">
-                <Newspaper className="h-16 w-16 mx-auto" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No articles found</h3>
-              <p className="text-gray-600 mb-4">
-                {selectedTag === 'All' 
-                  ? 'No news articles are currently available.' 
-                  : `No articles found for "${selectedTag}".`
-                }
-              </p>
-              <Button variant="outline" onClick={handleRefresh}>
-                Refresh News
-              </Button>
-            </div>
-          )}
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => <LoadingCard key={i} />)
+            : filteredArticles.map((article, i) => <NewsCard key={article?.id || i} article={article} />)
+          }
         </div>
 
-        {/* Email Subscription Form */}
-        {!loading && (
-          <div className="mt-12 max-w-md mx-auto">
-            <SubscribeForm />
-          </div>
-        )}
+        {/* Share Button */}
+        <div className="text-center mt-8">
+          <Button onClick={handleShare}>📤 Share this page</Button>
+        </div>
+
+        <div className="mt-12 max-w-md mx-auto">
+          <SubscribeForm />
+        </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   )
 }
 
 export default App
-
