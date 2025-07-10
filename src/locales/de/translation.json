@@ -1,1 +1,61 @@
+{
+  "app": {
+    "title": "Jetzt Passiert",
+    "subtitle": "Echtzeit-Nachrichten-Updates",
+    "lastUpdated": "Zuletzt aktualisiert: {{time}}",
+    "refresh": "Aktualisieren",
+    "archive": "Archiv",
+    "showingArticles": "Zeige {{count}} Artikel",
+    "showingArticles_plural": "Zeige {{count}} Artikel",
+    "taggedWith": "markiert mit \"{{tag}}\"",
+    "noArticlesFound": "Keine Artikel gefunden",
+    "noArticlesAvailable": "Derzeit sind keine Nachrichtenartikel verfügbar.",
+    "noArticlesForTag": "Keine Artikel für \"{{tag}}\" gefunden.",
+    "refreshNews": "Nachrichten Aktualisieren",
+    "tryAgain": "Erneut Versuchen",
+    "failedToLoad": "Fehler beim Laden der Nachrichten"
+  },
+  "trending": {
+    "title": "Was Gerade Angesagt Ist",
+    "mentions": "{{count}} Erwähnungen von {{source}}"
+  },
+  "subscription": {
+    "title": "Abonniere Tägliche Trend-Nachrichten",
+    "description": "Erhalte die heißesten Trend-Themen jeden Morgen in deinem Posteingang",
+    "placeholder": "Gib deine E-Mail-Adresse ein",
+    "subscribe": "Jetzt Abonnieren",
+    "subscribing": "Abonniere...",
+    "subscribed": "Abonniert!",
+    "success": "✅ Erfolgreich abonniert! Du erhältst tägliche Trend-Nachrichten-Updates.",
+    "error": "❌ Netzwerkfehler. Bitte versuche es erneut.",
+    "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein",
+    "enterEmail": "Bitte gib deine E-Mail-Adresse ein",
+    "confirmation": "📧 Überprüfe deine E-Mail zur Bestätigung. Du kannst dich jederzeit abmelden.",
+    "privacy": "🔒 Wir respektieren deine Privatsphäre. Kein Spam, jederzeit abmelden."
+  },
+  "newsCard": {
+    "readMore": "Mehr Lesen",
+    "ago": "vor",
+    "minutes": "{{count}}m",
+    "hours": "{{count}}h",
+    "days": "{{count}}T"
+  },
+  "footer": {
+    "vnxProduct": "VNX Produkt",
+    "poweredBy": "Angetrieben von",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. Alle Rechte vorbehalten.",
+    "twitter": "Folge uns auf Twitter",
+    "linkedin": "Verbinde dich auf LinkedIn",
+    "facebook": "Like uns auf Facebook"
+  },
+  "language": {
+    "switch": "Sprache",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文"
+  }
+}
 
