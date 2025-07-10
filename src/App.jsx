@@ -37,7 +37,7 @@ function App() {
     }
   }, [])
 
-  const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
+const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
 const LAST_FETCH_KEY = 'hn_last_fetch'
 const LAST_DATA_KEY = 'hn_cached_articles'
 
@@ -78,9 +78,9 @@ function App() {
     if (navigator.onLine && refetch) {
       refetch()
     }
-  }, 10 * 60 * 1000) // every 10 minutes
+  }, 10 * 60 * 1000)
   return () => clearInterval(interval)
-}, [refetch]
+}, [refetch])
 
   const handleRefresh = async () => {
   try {
