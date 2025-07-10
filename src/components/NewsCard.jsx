@@ -105,17 +105,7 @@ export function NewsCard({ article }) {
           description={article.summary || ''}
           className="flex gap-2 mt-3 pt-3 border-t border-gray-100"
         />
-      
-      <a
-        href={`https://wa.me/?text=${encodeURIComponent(article.title + ' ' + article.url)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center text-green-600 hover:underline text-sm mt-2"
-      >
-        Share on WhatsApp
-      </a>
-
-    </CardContent>
+      </CardContent>
     </Card>
   )
 }

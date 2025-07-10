@@ -1,10 +1,20 @@
 import React from 'react';
 import { Twitter, Linkedin, Facebook, ExternalLink } from 'lucide-react';
+import WhatsAppShare from './WhatsAppShare';
 
 function Footer() {
   return (
     <footer className="text-center text-sm text-gray-500 mt-12 py-6 border-t border-gray-200 bg-white">
       <div className="max-w-6xl mx-auto px-4">
+        {/* WhatsApp Share Section */}
+        <div className="mb-8">
+          <WhatsAppShare 
+            title="Stay updated with Happening Now - Real-time news from around the world!"
+            description="Get the latest breaking news and trending stories delivered fresh."
+            url={window.location.origin}
+          />
+        </div>
+        
         <p className="mb-4">
           A{' '}
           <a 
@@ -55,6 +65,11 @@ function Footer() {
         
         <div className="mt-4 text-xs text-gray-400">
           <p>&copy; 2024 Visnec Global. All rights reserved.</p>
+          <p className="mt-1">
+            Share news responsibly • Help others stay informed • 
+            <a href="#" className="hover:text-gray-600 ml-1">Privacy Policy</a> • 
+            <a href="#" className="hover:text-gray-600 ml-1">Terms of Service</a>
+          </p>
         </div>
       </div>
     </footer>
