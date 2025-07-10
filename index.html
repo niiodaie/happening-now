@@ -2,33 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Stay updated with the latest trending news from around the world. Real-time news updates." />
-    <meta name="keywords" content="news, breaking news, trending, headlines, current events, world news" />
-    <meta property="og:title" content="Happening Now - Real-Time News" />
-    <meta property="og:description" content="Stay updated with the latest trending news from around the world" />
+    <title>Happening Now - Real-Time News Updates</title>
+    <meta name="description" content="Stay updated with the latest trending news from around the world. Real-time updates on politics, technology, business, and more." />
+    <meta name="keywords" content="news, trending, real-time, politics, technology, business, world news" />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Happening Now RSS Feed" href="/api/rss" />
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Happening Now - Real-Time News" />
-    <meta name="twitter:description" content="Stay updated with the latest trending news from around the world" />
-    <title>Happening Now - Real-Time News</title>
+    <meta property="og:url" content="https://happening-now.vercel.app/" />
+    <meta property="og:title" content="Happening Now - Real-Time News Updates" />
+    <meta property="og:description" content="Stay updated with the latest trending news from around the world." />
+    <meta property="og:image" content="/logo.png" />
 
-    <!-- ✅ Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KVJEDNT78X"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KVJEDNT78X');
-    </script>
-
-    <!-- ✅ Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6074565478510564"
-      crossorigin="anonymous"></script>
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://happening-now.vercel.app/" />
+    <meta property="twitter:title" content="Happening Now - Real-Time News Updates" />
+    <meta property="twitter:description" content="Stay updated with the latest trending news from around the world." />
+    <meta property="twitter:image" content="/logo.png" />
+    
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6074565478510564" crossorigin="anonymous"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+
