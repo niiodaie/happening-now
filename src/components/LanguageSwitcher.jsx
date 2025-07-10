@@ -12,7 +12,11 @@ const LanguageSwitcher = () => {
     { code: 'fr', name: t('language.french'), flag: '🇫🇷' },
     { code: 'es', name: t('language.spanish'), flag: '🇪🇸' },
     { code: 'de', name: t('language.german'), flag: '🇩🇪' },
-    { code: 'zh', name: t('language.chinese'), flag: '🇨🇳' }
+    { code: 'zh', name: t('language.chinese'), flag: '🇨🇳' },
+    { code: 'sw', name: t('language.swahili'), flag: '🇰🇪' },
+    { code: 'hi', name: t('language.hindi'), flag: '🇮🇳' },
+    { code: 'pt', name: t('language.portuguese'), flag: '🇵🇹' },
+    { code: 'ar', name: t('language.arabic'), flag: '🇸🇦' }
   ];
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];

@@ -1,7 +1,8 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { ExternalLink, Clock, User, Share2 } from 'lucide-react'
+import { Card, CardContent, CardHeader } from './ui/card'
+import { Badge } from './ui/badge'
+import { Button } from './ui/button'
+import { Clock, ExternalLink } from 'lucide-react'
+import SocialShare from './SocialShare'
 import { formatTimeAgo, generateSlug } from '@/lib/utils'
 
 export function NewsCard({ article }) {
@@ -96,6 +97,14 @@ export function NewsCard({ article }) {
             <ExternalLink className="ml-1 h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
           </Button>
         </div>
+        
+        {/* Social Sharing */}
+        <SocialShare 
+          url={article.url}
+          title={article.title}
+          description={article.summary || ''}
+          className="flex gap-2 mt-3 pt-3 border-t border-gray-100"
+        />
       </CardContent>
     </Card>
   )
