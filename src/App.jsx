@@ -37,6 +37,18 @@ function App() {
     }
   }, [])
 
+  const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
+const LAST_FETCH_KEY = 'hn_last_fetch'
+const LAST_DATA_KEY = 'hn_cached_articles'
+
+function App() {
+  const { t } = useTranslation()
+  const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
+  const [appError, setAppError] = useState(null)
+  const [geoLocationError, setGeoLocationError] = useState(null)
+
+  const geo = useGeoLocation()
+
   const {
     articles = [],
     trends = [],
@@ -62,28 +74,28 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (navigator.onLine && refetch) {
-        refetch()
-      }
-    }, 10 * 60 * 1000) // every 10 minutes
-    return () => clearInterval(interval)
-  }, [refetch])
+  const interval = setInterval(() => {
+    if (navigator.onLine && refetch) {
+      refetch()
+    }
+  }, 10 * 60 * 1000) // every 10 minutes
+  return () => clearInterval(interval)
+}, [refetch]
 
   const handleRefresh = async () => {
-    try {
-      setRefreshing(true)
-      setAppError(null)
-      if (refetch && typeof refetch === 'function') {
-        await refetch(true)
-      }
-    } catch (error) {
-      console.error('Refresh failed:', error)
-      setAppError('Failed to refresh. Please try again.')
-    } finally {
-      setRefreshing(false)
+  try {
+    setRefreshing(true)
+    setAppError(null)
+    if (refetch && typeof refetch === 'function') {
+      await refetch(true)
     }
+  } catch (error) {
+    console.error('Refresh failed:', error)
+    setAppError('Failed to refresh. Please try again.')
+  } finally {
+    setRefreshing(false)
   }
+}
   // Enhanced tag selection handler
   const handleTagSelect = (tag) => {
     try {
