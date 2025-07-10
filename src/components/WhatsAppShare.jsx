@@ -12,55 +12,114 @@ const WhatsAppShare = ({
   const [copied, setCopied] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
 
-  // Format the message for WhatsApp
+  // Enhanced error logging
+  const logError = (context, error) => {
+    console.error(`[WhatsAppShare:${context}]`, error)
+  }
+
+  // Format the message for WhatsApp with enhanced safety
   const formatWhatsAppMessage = () => {
-    const message = `${title}\n\n${description ? description + '\n\n' : ''}${url}`
-    return encodeURIComponent(message)
-  }
-
-  // Share via WhatsApp Web/App
-  const shareToWhatsApp = () => {
-    const message = formatWhatsAppMessage()
-    const whatsappUrl = `https://wa.me/?text=${message}`
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
-  }
-
-  // Copy link to clipboard
-  const copyToClipboard = async () => {
     try {
-      const message = `${title}\n\n${description ? description + '\n\n' : ''}${url}`
-      await navigator.clipboard.writeText(message)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      const safeTitle = title || "Check out this news from Happening Now!"
+      const safeUrl = url || window.location.href
+      const safeDescription = description || ""
+      
+      const message = `${safeTitle}\n\n${safeDescription ? safeDescription + '\n\n' : ''}${safeUrl}`
+      return encodeURIComponent(message)
     } catch (error) {
-      console.error('Failed to copy to clipboard:', error)
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea')
-      textArea.value = `${title}\n\n${description ? description + '\n\n' : ''}${url}`
-      document.body.appendChild(textArea)
-      textArea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textArea)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      logError('formatMessage', error)
+      return encodeURIComponent(`Check out this news from Happening Now!\n\n${window.location.href}`)
     }
   }
 
-  // Share via Web Share API (if available)
-  const shareNative = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          text: description,
-          url: url,
-        })
-      } catch (error) {
-        console.error('Native sharing failed:', error)
-        // Fallback to WhatsApp
-        shareToWhatsApp()
+  // Enhanced share via WhatsApp Web/App
+  const shareToWhatsApp = () => {
+    try {
+      const message = formatWhatsAppMessage()
+      const whatsappUrl = `https://wa.me/?text=${message}`
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+      logError('shareSuccess', 'WhatsApp share opened successfully')
+    } catch (error) {
+      logError('shareToWhatsApp', error)
+      alert('Failed to open WhatsApp. Please try again.')
+    }
+  }
+
+  // Enhanced copy to clipboard with better fallbacks
+  const copyToClipboard = async () => {
+    try {
+      const safeTitle = title || "Check out this news from Happening Now!"
+      const safeUrl = url || window.location.href
+      const safeDescription = description || ""
+      
+      const message = `${safeTitle}\n\n${safeDescription ? safeDescription + '\n\n' : ''}${safeUrl}`
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(message)
+      } else {
+        // Enhanced fallback for older browsers
+        const textArea = document.createElement('textarea')
+        textArea.value = message
+        textArea.style.position = 'fixed'
+        textArea.style.left = '-999999px'
+        textArea.style.top = '-999999px'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        
+        const successful = document.execCommand('copy')
+        document.body.removeChild(textArea)
+        
+        if (!successful) {
+          throw new Error('Copy command failed')
+        }
       }
-    } else {
+      
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+      logError('copySuccess', 'Content copied to clipboard')
+    } catch (error) {
+      logError('copyToClipboard', error)
+      
+      // Final fallback - show the text to user
+      const safeTitle = title || "Check out this news from Happening Now!"
+      const safeUrl = url || window.location.href
+      const message = `${safeTitle}\n\n${safeUrl}`
+      
+      if (window.prompt) {
+        window.prompt('Copy this text manually:', message)
+      } else {
+        alert('Copy failed. Please copy the URL manually: ' + safeUrl)
+      }
+    }
+  }
+
+  // Enhanced native share with better error handling
+  const shareNative = async () => {
+    try {
+      if (!navigator.share) {
+        shareToWhatsApp()
+        return
+      }
+      
+      const shareData = {
+        title: title || "Check out this news from Happening Now!",
+        text: description || "",
+        url: url || window.location.href,
+      }
+      
+      await navigator.share(shareData)
+      logError('nativeShareSuccess', 'Native share completed')
+    } catch (error) {
+      logError('shareNative', error)
+      
+      // Check if user cancelled
+      if (error.name === 'AbortError') {
+        logError('shareNative', 'User cancelled share')
+        return
+      }
+      
+      // Fallback to WhatsApp
       shareToWhatsApp()
     }
   }
@@ -73,6 +132,7 @@ const WhatsAppShare = ({
           size="sm"
           onClick={shareToWhatsApp}
           className="flex items-center gap-2 text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
+          title="Share on WhatsApp"
         >
           <MessageCircle className="h-4 w-4" />
           <span className="hidden sm:inline">WhatsApp</span>
@@ -83,6 +143,7 @@ const WhatsAppShare = ({
           size="sm"
           onClick={copyToClipboard}
           className="flex items-center gap-2"
+          title={copied ? "Copied!" : "Copy to clipboard"}
         >
           {copied ? (
             <Check className="h-4 w-4 text-green-600" />
@@ -116,6 +177,7 @@ const WhatsAppShare = ({
               <Button
                 onClick={() => setShowOptions(true)}
                 className="bg-green-600 hover:bg-green-700 text-white"
+                title="Show sharing options"
               >
                 <Share className="h-4 w-4 mr-2" />
                 Share
@@ -127,6 +189,7 @@ const WhatsAppShare = ({
                   size="sm"
                   onClick={shareToWhatsApp}
                   className="flex items-center gap-2 text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
+                  title="Share on WhatsApp"
                 >
                   <MessageCircle className="h-4 w-4" />
                   WhatsApp
@@ -137,6 +200,7 @@ const WhatsAppShare = ({
                   size="sm"
                   onClick={copyToClipboard}
                   className="flex items-center gap-2"
+                  title={copied ? "Copied!" : "Copy to clipboard"}
                 >
                   {copied ? (
                     <>
@@ -157,6 +221,7 @@ const WhatsAppShare = ({
                     size="sm"
                     onClick={shareNative}
                     className="flex items-center gap-2"
+                    title="More sharing options"
                   >
                     <Share className="h-4 w-4" />
                     More
@@ -168,6 +233,7 @@ const WhatsAppShare = ({
                   size="sm"
                   onClick={() => setShowOptions(false)}
                   className="text-gray-500"
+                  title="Close sharing options"
                 >
                   ×
                 </Button>
