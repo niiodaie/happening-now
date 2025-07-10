@@ -22,12 +22,6 @@ const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
 const LAST_FETCH_KEY = 'hn_last_fetch'
 const LAST_DATA_KEY = 'hn_cached_articles'
 
-function App() {
-  const { t } = useTranslation()
-  const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
-  const [appError, setAppError] = useState(null)
-  const [geoLocationError, setGeoLocationError] = useState(null)
-
   useEffect(() => {
     try {
       useGeoLocation()
