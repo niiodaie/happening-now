@@ -1,13 +1,12 @@
-// main.jsx
+// File: main.jsx
 import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import './i18n' // Import i18n configuration
+import './i18n'
 import App from './App.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 import LoadingFallback from './components/LoadingFallback.jsx'
 
-// Global error logging
 window.addEventListener('error', (event) => {
   console.error('Global error:', event.error);
 });
