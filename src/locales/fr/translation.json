@@ -1,1 +1,61 @@
+{
+  "app": {
+    "title": "En Direct",
+    "subtitle": "Actualités en temps réel",
+    "lastUpdated": "Dernière mise à jour : {{time}}",
+    "refresh": "Actualiser",
+    "archive": "Archives",
+    "showingArticles": "Affichage de {{count}} article",
+    "showingArticles_plural": "Affichage de {{count}} articles",
+    "taggedWith": "étiquetés avec \"{{tag}}\"",
+    "noArticlesFound": "Aucun article trouvé",
+    "noArticlesAvailable": "Aucun article d'actualité n'est actuellement disponible.",
+    "noArticlesForTag": "Aucun article trouvé pour \"{{tag}}\".",
+    "refreshNews": "Actualiser les nouvelles",
+    "tryAgain": "Réessayer",
+    "failedToLoad": "Échec du chargement des actualités"
+  },
+  "trending": {
+    "title": "Tendances Actuelles",
+    "mentions": "{{count}} mentions de {{source}}"
+  },
+  "subscription": {
+    "title": "S'abonner aux Actualités Tendances Quotidiennes",
+    "description": "Recevez les sujets tendances les plus chauds dans votre boîte mail chaque matin",
+    "placeholder": "Entrez votre adresse e-mail",
+    "subscribe": "S'abonner Maintenant",
+    "subscribing": "Abonnement en cours...",
+    "subscribed": "Abonné !",
+    "success": "✅ Abonnement réussi ! Vous recevrez des mises à jour quotidiennes des actualités tendances.",
+    "error": "❌ Erreur réseau. Veuillez réessayer.",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+    "enterEmail": "Veuillez entrer votre adresse e-mail",
+    "confirmation": "📧 Vérifiez votre e-mail pour confirmation. Vous pouvez vous désabonner à tout moment.",
+    "privacy": "🔒 Nous respectons votre vie privée. Pas de spam, désabonnement à tout moment."
+  },
+  "newsCard": {
+    "readMore": "Lire Plus",
+    "ago": "il y a",
+    "minutes": "{{count}}m",
+    "hours": "{{count}}h",
+    "days": "{{count}}j"
+  },
+  "footer": {
+    "vnxProduct": "produit VNX",
+    "poweredBy": "Propulsé par",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. Tous droits réservés.",
+    "twitter": "Suivez-nous sur Twitter",
+    "linkedin": "Connectez-vous sur LinkedIn",
+    "facebook": "Aimez-nous sur Facebook"
+  },
+  "language": {
+    "switch": "Langue",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文"
+  }
+}
 
