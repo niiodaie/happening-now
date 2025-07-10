@@ -34,8 +34,8 @@
   "vite": "^6.0.1",
   "@tailwindcss/vite": "^4.0.0-alpha.30",
   "tailwindcss": "^4.0.0-alpha.30",
-  "terser": "^5.22.0"
-  },
+  "terser": "^5.19.2"
+},
   "engines": {
     "node": ">=18.0.0"
   }
