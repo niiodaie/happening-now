@@ -2,29 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
-    <link rel="apple-touch-icon" href="/logo.png" />
-    
-    <!-- Viewport and Mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Happening Now" />
-    
-    <!-- Primary Meta Tags -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happening Now - Real-Time News Updates</title>
-    <meta name="title" content="Happening Now - Real-Time News Updates" />
-    <meta name="description" content="Stay updated with the latest trending news from around the world. Real-time updates on politics, technology, business, and more. Share breaking news instantly via WhatsApp." />
-    <meta name="keywords" content="news, trending, real-time, politics, technology, business, world news, breaking news, WhatsApp sharing, live updates" />
-    <meta name="author" content="Visnec Global" />
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="1 days" />
+    <meta name="description" content="Stay updated with the latest trending news from around the world. Real-time updates on politics, technology, business, and more." />
+    <meta name="keywords" content="news, trending, real-time, politics, technology, business, world news" />
     
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Happening Now RSS Feed" href="/api/rss" />
@@ -33,109 +15,21 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://happening-now.vercel.app/" />
     <meta property="og:title" content="Happening Now - Real-Time News Updates" />
-    <meta property="og:description" content="Stay updated with the latest trending news from around the world. Real-time updates on politics, technology, business, and more." />
-    <meta property="og:image" content="https://happening-now.vercel.app/logo.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Happening Now" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:description" content="Stay updated with the latest trending news from around the world." />
+    <meta property="og:image" content="/logo.png" />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://happening-now.vercel.app/" />
-    <meta name="twitter:title" content="Happening Now - Real-Time News Updates" />
-    <meta name="twitter:description" content="Stay updated with the latest trending news from around the world. Real-time updates on politics, technology, business, and more." />
-    <meta name="twitter:image" content="https://happening-now.vercel.app/logo.png" />
-    <meta name="twitter:creator" content="@visnecglobal" />
-    <meta name="twitter:site" content="@visnecglobal" />
-    
-    <!-- WhatsApp Sharing -->
-    <meta property="og:image:alt" content="Happening Now - Real-time news updates" />
-    <meta name="whatsapp:title" content="Happening Now - Real-Time News Updates" />
-    <meta name="whatsapp:description" content="Stay updated with the latest trending news from around the world." />
-    <meta name="whatsapp:image" content="https://happening-now.vercel.app/logo.png" />
-    
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#2563eb" />
-    <meta name="background-color" content="#ffffff" />
-    <meta name="display" content="standalone" />
-    <meta name="orientation" content="portrait-primary" />
-    
-    <!-- Performance and Security -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="referrer" content="origin-when-cross-origin" />
-    <meta name="format-detection" content="telephone=no" />
-    
-    <!-- Preconnect for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-    
-    <!-- DNS Prefetch -->
-    <link rel="dns-prefetch" href="//visnec.ai" />
-    <link rel="dns-prefetch" href="//visnec.com" />
-    <link rel="dns-prefetch" href="//wa.me" />
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Happening Now",
-      "description": "Real-time news updates from around the world",
-      "url": "https://happening-now.vercel.app/",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Visnec Global",
-        "url": "https://visnec.com"
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://happening-now.vercel.app/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://happening-now.vercel.app/" />
+    <meta property="twitter:title" content="Happening Now - Real-Time News Updates" />
+    <meta property="twitter:description" content="Stay updated with the latest trending news from around the world." />
+    <meta property="twitter:image" content="/logo.png" />
     
     <!-- AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6074565478510564" crossorigin="anonymous"></script>
-    
-    <!-- Error Tracking -->
-    <script>
-      window.addEventListener('error', function(e) {
-        console.error('Global error:', e.error);
-      });
-      
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('Unhandled promise rejection:', e.reason);
-      });
-    </script>
   </head>
   <body>
-    <noscript>
-      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-        <h1>JavaScript Required</h1>
-        <p>This application requires JavaScript to run. Please enable JavaScript in your browser and refresh the page.</p>
-        <p>For the best experience, we recommend using a modern browser like Chrome, Firefox, Safari, or Edge.</p>
-      </div>
-    </noscript>
-    
-    <div id="root">
-      <!-- Fallback content while React loads -->
-      <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #f9fafb;">
-        <div style="text-align: center;">
-          <div style="width: 48px; height: 48px; border: 3px solid #e5e7eb; border-top: 3px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px;"></div>
-          <p style="color: #6b7280; font-family: Arial, sans-serif;">Loading Happening Now...</p>
-        </div>
-      </div>
-      <style>
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      </style>
-    </div>
-    
+    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
