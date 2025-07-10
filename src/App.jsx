@@ -10,16 +10,17 @@ import { SubscribeForm } from './components/SubscribeForm'
 import Footer from './components/Footer'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import { HeaderAd, SidebarAd, ArticleAd } from './components/AdSlot'
+import LoadingFallback from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
 import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff } from 'lucide-react'
 
 function App() {
   const { t } = useTranslation()
-  const [isOnline, setIsOnline] = useState(navigator?.onlineState ?? true)
+  const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
   const [appError, setAppError] = useState(null)
   
-  // Safe geo-location hook usage
+  // Safe geo-location hook usage with error handling
   try {
     useGeoLocation()
   } catch (error) {
@@ -50,27 +51,6 @@ function App() {
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
-
-  // Global error boundary effect
-  useEffect(() => {
-    const handleError = (event) => {
-      console.error('Global error:', event.error)
-      setAppError('An unexpected error occurred. Please refresh the page.')
-    }
-    
-    const handleUnhandledRejection = (event) => {
-      console.error('Unhandled promise rejection:', event.reason)
-      setAppError('A network error occurred. Please check your connection.')
-    }
-    
-    window.addEventListener('error', handleError)
-    window.addEventListener('unhandledrejection', handleUnhandledRejection)
-    
-    return () => {
-      window.removeEventListener('error', handleError)
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
     }
   }, [])
 
@@ -122,7 +102,7 @@ function App() {
     }
   }
 
-  // Offline banner
+  // Offline state
   if (!isOnline) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
