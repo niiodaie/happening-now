@@ -1,1 +1,61 @@
+{
+  "app": {
+    "title": "Happening Now",
+    "subtitle": "Real-time news updates",
+    "lastUpdated": "Last updated: {{time}}",
+    "refresh": "Refresh",
+    "archive": "Archive",
+    "showingArticles": "Showing {{count}} article",
+    "showingArticles_plural": "Showing {{count}} articles",
+    "taggedWith": "tagged with \"{{tag}}\"",
+    "noArticlesFound": "No articles found",
+    "noArticlesAvailable": "No news articles are currently available.",
+    "noArticlesForTag": "No articles found for \"{{tag}}\".",
+    "refreshNews": "Refresh News",
+    "tryAgain": "Try Again",
+    "failedToLoad": "Failed to load news"
+  },
+  "trending": {
+    "title": "What's Hot Now",
+    "mentions": "{{count}} mentions from {{source}}"
+  },
+  "subscription": {
+    "title": "Subscribe for Daily Trending News",
+    "description": "Get the hottest trending topics delivered to your inbox every morning",
+    "placeholder": "Enter your email address",
+    "subscribe": "Subscribe Now",
+    "subscribing": "Subscribing...",
+    "subscribed": "Subscribed!",
+    "success": "✅ Subscribed successfully! You'll receive daily trending news updates.",
+    "error": "❌ Network error. Please try again.",
+    "invalidEmail": "Please enter a valid email address",
+    "enterEmail": "Please enter your email address",
+    "confirmation": "📧 Check your email for confirmation. You can unsubscribe anytime.",
+    "privacy": "🔒 We respect your privacy. No spam, unsubscribe anytime."
+  },
+  "newsCard": {
+    "readMore": "Read More",
+    "ago": "ago",
+    "minutes": "{{count}}m",
+    "hours": "{{count}}h",
+    "days": "{{count}}d"
+  },
+  "footer": {
+    "vnxProduct": "VNX product",
+    "poweredBy": "Powered by",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. All rights reserved.",
+    "twitter": "Follow us on Twitter",
+    "linkedin": "Connect on LinkedIn",
+    "facebook": "Like us on Facebook"
+  },
+  "language": {
+    "switch": "Language",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文"
+  }
+}
 
