@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MessageCircle, Share2, Copy, Check } from 'lucide-react'
+import { MessageCircle, Share, Copy, Check } from 'lucide-react'
 import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 
@@ -101,7 +101,7 @@ const WhatsAppShare = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-green-100 rounded-full">
-              <Share2 className="h-5 w-5 text-green-600" />
+              <Share className="h-5 w-5 text-green-600" />
             </div>
             <div>
               <h3 className="font-medium text-gray-900">Share the News</h3>
@@ -117,7 +117,7 @@ const WhatsAppShare = ({
                 onClick={() => setShowOptions(true)}
                 className="bg-green-600 hover:bg-green-700 text-white"
               >
-                <Share2 className="h-4 w-4 mr-2" />
+                <Share className="h-4 w-4 mr-2" />
                 Share
               </Button>
             ) : (
@@ -158,7 +158,7 @@ const WhatsAppShare = ({
                     onClick={shareNative}
                     className="flex items-center gap-2"
                   >
-                    <Share2 className="h-4 w-4" />
+                    <Share className="h-4 w-4" />
                     More
                   </Button>
                 )}

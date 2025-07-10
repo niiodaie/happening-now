@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Share2, Twitter, Facebook, MessageCircle, Copy, Check } from 'lucide-react';
+import { Share, Twitter, Facebook, MessageCircle, Copy, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { shareToSocialMedia, shareNewsToWhatsApp, copyToClipboard } from '@/lib/shareUtils';
 
@@ -109,7 +109,7 @@ const SocialShare = ({
           className="h-8 px-2 text-gray-600 hover:text-gray-700 hover:bg-gray-50"
           title="More sharing options"
         >
-          <Share2 className="h-4 w-4" />
+          <Share className="h-4 w-4" />
         </Button>
       </div>
     </div>

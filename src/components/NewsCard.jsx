@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from './ui/card'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
-import { Clock, ExternalLink, Share2, User } from 'lucide-react'
+import { Clock, ExternalLink, Share, User } from 'lucide-react'
 import SocialShare from './SocialShare'
 import { formatTimeAgo, generateSlug } from '@/lib/utils'
 import { shareNews, shareNewsToWhatsApp } from '@/lib/shareUtils'
@@ -48,7 +48,7 @@ export function NewsCard({ article }) {
           onClick={handleShare}
           title="Share this article"
         >
-          <Share2 className="h-4 w-4" />
+          <Share className="h-4 w-4" />
         </Button>
       </div>
       
