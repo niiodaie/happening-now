@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+mport { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNews } from './hooks/useNews'
 import useGeoLocation from './hooks/useGeoLocation'
@@ -12,7 +12,7 @@ import LanguageSwitcher from './components/LanguageSwitcher'
 import LoadingFallback from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
-import { Newspaper, RefreshCw, Clock, AlertCircle, WifiOff, Share } from 'lucide-react'
+import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, Share } from 'lucide-react'
 
 const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
 const LAST_FETCH_KEY = 'hn_last_fetch'
@@ -23,8 +23,6 @@ function App() {
   const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
   const [appError, setAppError] = useState(null)
   const [geoLocationError, setGeoLocationError] = useState(null)
-  const [selectedTag, setSelectedTag] = useState('All')
-  const [refreshing, setRefreshing] = useState(false)
 
   const geo = useGeoLocation()
 
@@ -37,6 +35,9 @@ function App() {
     availableTags = [],
     refetch
   } = useNews({ useCache: true, cacheKey: LAST_FETCH_KEY, cacheDataKey: LAST_DATA_KEY, interval: CACHE_INTERVAL }) || {}
+
+  const [selectedTag, setSelectedTag] = useState('All')
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
@@ -135,6 +136,18 @@ function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-6">
+        {/* Hot Deal Section */}
+        <div className="mb-6">
+          <a
+            href="https://amzn.to/44mFp0h"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-yellow-100 border border-yellow-300 rounded-md p-4 text-center hover:bg-yellow-200"
+          >
+            🛍️ Hot Deal: Check out our favorite gadget on Amazon!
+          </a>
+        </div>
+
         {error && (
           <Card className="mb-4 border-red-200 bg-red-50">
             <CardContent className="p-4 text-red-700">
@@ -171,4 +184,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
