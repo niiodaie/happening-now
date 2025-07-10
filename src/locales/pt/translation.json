@@ -1,1 +1,65 @@
+{
+  "app": {
+    "title": "Acontecendo Agora",
+    "subtitle": "Atualizações de notícias em tempo real",
+    "lastUpdated": "Última atualização: {{time}}",
+    "refresh": "Atualizar",
+    "archive": "Arquivo",
+    "showingArticles": "Mostrando {{count}} artigo",
+    "showingArticles_plural": "Mostrando {{count}} artigos",
+    "taggedWith": "marcados com \"{{tag}}\"",
+    "noArticlesFound": "Nenhum artigo encontrado",
+    "noArticlesAvailable": "Nenhum artigo de notícias está disponível no momento.",
+    "noArticlesForTag": "Nenhum artigo encontrado para \"{{tag}}\".",
+    "refreshNews": "Atualizar Notícias",
+    "tryAgain": "Tentar Novamente",
+    "failedToLoad": "Falha ao carregar notícias"
+  },
+  "trending": {
+    "title": "O Que Está em Alta Agora",
+    "mentions": "{{count}} menções de {{source}}"
+  },
+  "subscription": {
+    "title": "Inscreva-se para Notícias Trending Diárias",
+    "description": "Receba os tópicos mais quentes em sua caixa de entrada todas as manhãs",
+    "placeholder": "Digite seu endereço de e-mail",
+    "subscribe": "Inscrever-se Agora",
+    "subscribing": "Inscrevendo...",
+    "subscribed": "Inscrito!",
+    "success": "✅ Inscrito com sucesso! Você receberá atualizações diárias de notícias trending.",
+    "error": "❌ Erro de rede. Por favor, tente novamente.",
+    "invalidEmail": "Por favor, digite um endereço de e-mail válido",
+    "enterEmail": "Por favor, digite seu endereço de e-mail",
+    "confirmation": "📧 Verifique seu e-mail para confirmação. Você pode cancelar a inscrição a qualquer momento.",
+    "privacy": "🔒 Respeitamos sua privacidade. Sem spam, cancele a inscrição a qualquer momento."
+  },
+  "newsCard": {
+    "readMore": "Ler Mais",
+    "ago": "atrás",
+    "minutes": "{{count}}m",
+    "hours": "{{count}}h",
+    "days": "{{count}}d"
+  },
+  "footer": {
+    "vnxProduct": "produto VNX",
+    "poweredBy": "Desenvolvido por",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. Todos os direitos reservados.",
+    "twitter": "Siga-nos no Twitter",
+    "linkedin": "Conecte-se no LinkedIn",
+    "facebook": "Curta-nos no Facebook"
+  },
+  "language": {
+    "switch": "Idioma",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文",
+    "swahili": "Kiswahili",
+    "hindi": "हिन्दी",
+    "portuguese": "Português",
+    "arabic": "العربية"
+  }
+}
 
