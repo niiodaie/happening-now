@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
-// Finalized for Vercel deployment
+// https://vite.dev/config/
 export default defineConfig({
-  base: '/', // Ensures correct asset paths in production
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -24,7 +23,6 @@ export default defineConfig({
         },
       },
     },
-    emptyOutDir: true, // ✅ Ensures clean dist folder
   },
   server: {
     port: 3000,
@@ -35,3 +33,4 @@ export default defineConfig({
     host: true
   }
 })
+
