@@ -1,3 +1,4 @@
+// File: App.jsx (initial import section)
 import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNews } from './hooks/useNews'
@@ -9,208 +10,80 @@ import { TrendingTopics } from './components/TrendingTopics'
 import { SubscribeForm } from './components/SubscribeForm'
 import Footer from './components/Footer'
 import LanguageSwitcher from './components/LanguageSwitcher'
+// import { HeaderAd, SidebarAd, ArticleAd } from './components/AdSlot' // temporarily disabled to fix 400s
 import LoadingFallback from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
 import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, Share } from 'lucide-react'
+import { I18nextProvider } from 'react-i18next'
+import i18n from './i18n'
 
-// Temporarily disabled AdSlot components to fix 400 errors
-const HeaderAd = () => null
-const SidebarAd = () => null
-const ArticleAd = () => null
-
-// Enhanced error logging utility
-const logError = (context, error, additionalInfo = {}) => {
-  const errorInfo = {
-    context,
-    error: error?.message || error,
-    stack: error?.stack,
-    timestamp: new Date().toISOString(),
-    userAgent: navigator?.userAgent,
-    url: window?.location?.href,
-    ...additionalInfo
-  }
-  
-  console.error(`[${context}]`, errorInfo)
-  
-  // In production, you could send this to an error tracking service
-  if (process.env.NODE_ENV === 'production') {
-    // Example: sendToErrorService(errorInfo)
-  }
-}
+const CACHE_INTERVAL = 30 * 60 * 1000 // 30 mins
+const LAST_FETCH_KEY = 'hn_last_fetch'
+const LAST_DATA_KEY = 'hn_cached_articles'
 
 function App() {
   const { t } = useTranslation()
   const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
   const [appError, setAppError] = useState(null)
   const [geoLocationError, setGeoLocationError] = useState(null)
-  
-  // Enhanced safe geo-location hook usage with error handling
+
   useEffect(() => {
     try {
       useGeoLocation()
     } catch (error) {
-      logError('GeoLocation', error)
       setGeoLocationError('Location detection failed')
       console.warn('Geo-location failed:', error)
     }
   }, [])
-  
-  // Enhanced news hook with better error handling
-  let newsData = {}
-  try {
-    newsData = useNews() || {}
-  } catch (error) {
-    logError('NewsHook', error)
-    newsData = {}
-  }
-  
-  const { 
-    articles = [], 
-    trends = [], 
-    loading = false, 
-    error, 
-    lastUpdated, 
-    availableTags = [], 
-    refetch 
-  } = newsData
-  
+
+  const {
+    articles = [],
+    trends = [],
+    loading = false,
+    error,
+    lastUpdated,
+    availableTags = [],
+    refetch
+  } = useNews({ useCache: true, cacheKey: LAST_FETCH_KEY, cacheDataKey: LAST_DATA_KEY, interval: CACHE_INTERVAL }) || {}
+
   const [selectedTag, setSelectedTag] = useState('All')
   const [refreshing, setRefreshing] = useState(false)
 
-  // Enhanced online status monitoring
   useEffect(() => {
-    const handleOnline = () => {
-      setIsOnline(true)
-      logError('NetworkStatus', 'Back online', { status: 'online' })
-    }
-    
-    const handleOffline = () => {
-      setIsOnline(false)
-      logError('NetworkStatus', 'Gone offline', { status: 'offline' })
-    }
-    
+    const handleOnline = () => setIsOnline(true)
+    const handleOffline = () => setIsOnline(false)
     window.addEventListener('online', handleOnline)
     window.addEventListener('offline', handleOffline)
-    
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
     }
   }, [])
 
-  // Enhanced global error handling
   useEffect(() => {
-    const handleGlobalError = (event) => {
-      logError('GlobalError', event.error, {
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno
-      })
-      setAppError('An unexpected error occurred. Please refresh the page.')
-    }
-    
-    const handleUnhandledRejection = (event) => {
-      logError('UnhandledRejection', event.reason)
-      setAppError('A network error occurred. Please check your connection.')
-    }
-    
-    window.addEventListener('error', handleGlobalError)
-    window.addEventListener('unhandledrejection', handleUnhandledRejection)
-    
-    return () => {
-      window.removeEventListener('error', handleGlobalError)
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection)
-    }
-  }, [])
+    const interval = setInterval(() => {
+      if (navigator.onLine && refetch) {
+        refetch()
+      }
+    }, 10 * 60 * 1000) // every 10 minutes
+    return () => clearInterval(interval)
+  }, [refetch])
 
-  // Enhanced article filtering with robust error handling
-  const filteredArticles = useMemo(() => {
-    try {
-      // Defensive checks for articles
-      if (!articles) {
-        logError('ArticleFilter', 'Articles is null/undefined')
-        return []
-      }
-      
-      if (!Array.isArray(articles)) {
-        logError('ArticleFilter', 'Articles is not an array', { 
-          type: typeof articles, 
-          value: articles 
-        })
-        return []
-      }
-      
-      if (articles.length === 0) {
-        return []
-      }
-      
-      // Defensive check for selectedTag
-      const safeSelectedTag = selectedTag || 'All'
-      
-      if (safeSelectedTag === 'All') {
-        return articles.filter(article => article && typeof article === 'object')
-      }
-      
-      return articles.filter(article => {
-        try {
-          if (!article || typeof article !== 'object') {
-            return false
-          }
-          
-          const tags = article.tags
-          if (!tags) return false
-          
-          if (!Array.isArray(tags)) {
-            logError('ArticleFilter', 'Article tags is not an array', { 
-              articleId: article.id,
-              tags: tags 
-            })
-            return false
-          }
-          
-          return tags.includes(safeSelectedTag)
-        } catch (filterError) {
-          logError('ArticleFilter', filterError, { 
-            articleId: article?.id,
-            selectedTag: safeSelectedTag 
-          })
-          return false
-        }
-      })
-    } catch (error) {
-      logError('ArticleFilter', error, { 
-        articlesLength: articles?.length,
-        selectedTag 
-      })
-      return []
-    }
-  }, [articles, selectedTag])
-
-  // Enhanced refresh handler
   const handleRefresh = async () => {
     try {
       setRefreshing(true)
       setAppError(null)
-      
-      if (!refetch) {
-        throw new Error('Refetch function not available')
+      if (refetch && typeof refetch === 'function') {
+        await refetch(true)
       }
-      
-      if (typeof refetch !== 'function') {
-        throw new Error('Refetch is not a function')
-      }
-      
-      await refetch()
-      logError('Refresh', 'Refresh successful', { timestamp: new Date().toISOString() })
     } catch (error) {
-      logError('Refresh', error)
+      console.error('Refresh failed:', error)
       setAppError('Failed to refresh. Please try again.')
     } finally {
       setRefreshing(false)
     }
   }
-
   // Enhanced tag selection handler
   const handleTagSelect = (tag) => {
     try {
