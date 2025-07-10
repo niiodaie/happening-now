@@ -1,27 +1,19 @@
 import { Card, CardContent, CardHeader } from './ui/card'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
-import { Clock, ExternalLink } from 'lucide-react'
+import { Clock, ExternalLink, Share2, User } from 'lucide-react'
 import SocialShare from './SocialShare'
 import { formatTimeAgo, generateSlug } from '@/lib/utils'
+import { shareNews, shareNewsToWhatsApp } from '@/lib/shareUtils'
 
 export function NewsCard({ article }) {
   const handleShare = async () => {
-    const shareData = {
-      title: article.title,
-      text: article.summary,
-      url: article.url
-    }
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData)
-      } catch (err) {
-        console.log('Error sharing:', err)
-      }
-    } else {
-      // Fallback to copying URL
-      navigator.clipboard.writeText(article.url)
+    try {
+      await shareNews(article.title, article.url, article.summary);
+    } catch (err) {
+      console.log('Error sharing:', err);
+      // Fallback to WhatsApp
+      shareNewsToWhatsApp(article);
     }
   }
 
@@ -54,6 +46,7 @@ export function NewsCard({ article }) {
           size="sm"
           className="absolute top-2 right-2 bg-black/70 text-white hover:bg-black/80 backdrop-blur-sm"
           onClick={handleShare}
+          title="Share this article"
         >
           <Share2 className="h-4 w-4" />
         </Button>
@@ -100,6 +93,7 @@ export function NewsCard({ article }) {
         
         {/* Social Sharing */}
         <SocialShare 
+          article={article}
           url={article.url}
           title={article.title}
           description={article.summary || ''}
