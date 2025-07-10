@@ -1,4 +1,3 @@
-
 // File: App.jsx
 import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -73,7 +72,14 @@ function App() {
     }
   }
 
-  return <div>App rendering logic here (omitted for brevity)</div>
-}
+  createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingFallback />}>
+        <App />
+      </Suspense>
+    </ErrorBoundary>
+  </StrictMode>
+);
 
 export default App
