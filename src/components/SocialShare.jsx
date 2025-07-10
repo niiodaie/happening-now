@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Share2, Twitter, Facebook, MessageCircle, Copy, Check } from 'lucide-react';
+import { Share, Twitter, Facebook, MessageCircle, Copy, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { shareToSocialMedia, shareNewsToWhatsApp, copyToClipboard } from '@/lib/shareUtils';
 
@@ -12,44 +12,104 @@ const SocialShare = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
+  // Enhanced error logging
+  const logError = (context, error) => {
+    console.error(`[SocialShare:${context}]`, error)
+  }
+
+  // Enhanced share handler with better error handling
   const handleShare = (platform) => {
-    if (platform === 'whatsapp' && article) {
-      shareNewsToWhatsApp(article);
-    } else {
-      shareToSocialMedia(platform, title, url, description);
-    }
-  };
-
-  const handleNativeShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          text: description,
-          url: url,
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-        // Fallback to WhatsApp
-        if (article) {
-          shareNewsToWhatsApp(article);
-        }
+    try {
+      if (!platform) {
+        throw new Error('Platform not specified')
       }
-    } else {
-      // Fallback to copying URL to clipboard
-      handleCopyLink();
+      
+      if (platform === 'whatsapp' && article) {
+        shareNewsToWhatsApp(article);
+      } else {
+        const safeTitle = title || 'Check out this news!'
+        const safeUrl = url || window.location.href
+        const safeDescription = description || ''
+        
+        shareToSocialMedia(platform, safeTitle, safeUrl, safeDescription);
+      }
+      
+      logError('shareSuccess', `Shared to ${platform}`)
+    } catch (error) {
+      logError('handleShare', error)
+      alert(`Failed to share to ${platform}. Please try again.`)
     }
   };
 
+  // Enhanced native share with better error handling
+  const handleNativeShare = async () => {
+    try {
+      if (!navigator.share) {
+        logError('nativeShare', 'Native share not supported')
+        handleCopyLink();
+        return
+      }
+      
+      const shareData = {
+        title: title || 'Check out this news!',
+        text: description || '',
+        url: url || window.location.href,
+      }
+      
+      await navigator.share(shareData);
+      logError('nativeShareSuccess', 'Native share completed')
+    } catch (error) {
+      logError('handleNativeShare', error)
+      
+      // Check if user cancelled
+      if (error.name === 'AbortError') {
+        logError('nativeShare', 'User cancelled share')
+        return
+      }
+      
+      // Fallback to WhatsApp or copy
+      if (article) {
+        try {
+          shareNewsToWhatsApp(article);
+        } catch (fallbackError) {
+          logError('whatsappFallback', fallbackError)
+          handleCopyLink();
+        }
+      } else {
+        handleCopyLink();
+      }
+    }
+  };
+
+  // Enhanced copy link with better error handling
   const handleCopyLink = async () => {
-    const shareText = article 
-      ? `${title}\n\n${description}\n\n${url}`
-      : `${title} - ${url}`;
-    
-    const success = await copyToClipboard(shareText);
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+    try {
+      const safeTitle = title || 'Check out this news!'
+      const safeUrl = url || window.location.href
+      const safeDescription = description || ''
+      
+      const shareText = article 
+        ? `${safeTitle}\n\n${safeDescription}\n\n${safeUrl}`
+        : `${safeTitle} - ${safeUrl}`;
+      
+      const success = await copyToClipboard(shareText);
+      if (success) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        logError('copySuccess', 'Content copied to clipboard')
+      } else {
+        throw new Error('Copy operation failed')
+      }
+    } catch (error) {
+      logError('handleCopyLink', error)
+      
+      // Final fallback - show alert with URL
+      const safeUrl = url || window.location.href
+      if (window.prompt) {
+        window.prompt('Copy this URL manually:', safeUrl)
+      } else {
+        alert(`Copy this URL: ${safeUrl}`)
+      }
     }
   };
 
@@ -93,7 +153,7 @@ const SocialShare = ({
           size="sm"
           onClick={handleCopyLink}
           className="h-8 px-2 text-gray-600 hover:text-gray-700 hover:bg-gray-50"
-          title="Copy link"
+          title={copied ? "Copied!" : "Copy link"}
         >
           {copied ? (
             <Check className="h-4 w-4 text-green-600" />
@@ -109,7 +169,7 @@ const SocialShare = ({
           className="h-8 px-2 text-gray-600 hover:text-gray-700 hover:bg-gray-50"
           title="More sharing options"
         >
-          <Share2 className="h-4 w-4" />
+          <Share className="h-4 w-4" />
         </Button>
       </div>
     </div>
