@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/', // ✅ Needed for correct script paths in production
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -33,4 +33,3 @@ export default defineConfig({
     host: true
   }
 })
-
