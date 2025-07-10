@@ -1,1 +1,61 @@
+{
+  "app": {
+    "title": "Sucediendo Ahora",
+    "subtitle": "Noticias en tiempo real",
+    "lastUpdated": "Última actualización: {{time}}",
+    "refresh": "Actualizar",
+    "archive": "Archivo",
+    "showingArticles": "Mostrando {{count}} artículo",
+    "showingArticles_plural": "Mostrando {{count}} artículos",
+    "taggedWith": "etiquetados con \"{{tag}}\"",
+    "noArticlesFound": "No se encontraron artículos",
+    "noArticlesAvailable": "No hay artículos de noticias disponibles actualmente.",
+    "noArticlesForTag": "No se encontraron artículos para \"{{tag}}\".",
+    "refreshNews": "Actualizar Noticias",
+    "tryAgain": "Intentar de Nuevo",
+    "failedToLoad": "Error al cargar noticias"
+  },
+  "trending": {
+    "title": "Lo Más Popular Ahora",
+    "mentions": "{{count}} menciones de {{source}}"
+  },
+  "subscription": {
+    "title": "Suscríbete a Noticias Tendencia Diarias",
+    "description": "Recibe los temas más populares en tu bandeja de entrada cada mañana",
+    "placeholder": "Ingresa tu dirección de correo electrónico",
+    "subscribe": "Suscribirse Ahora",
+    "subscribing": "Suscribiendo...",
+    "subscribed": "¡Suscrito!",
+    "success": "✅ ¡Suscripción exitosa! Recibirás actualizaciones diarias de noticias tendencia.",
+    "error": "❌ Error de red. Por favor, inténtalo de nuevo.",
+    "invalidEmail": "Por favor, ingresa una dirección de correo electrónico válida",
+    "enterEmail": "Por favor, ingresa tu dirección de correo electrónico",
+    "confirmation": "📧 Revisa tu correo electrónico para confirmación. Puedes cancelar la suscripción en cualquier momento.",
+    "privacy": "🔒 Respetamos tu privacidad. Sin spam, cancela la suscripción en cualquier momento."
+  },
+  "newsCard": {
+    "readMore": "Leer Más",
+    "ago": "hace",
+    "minutes": "{{count}}m",
+    "hours": "{{count}}h",
+    "days": "{{count}}d"
+  },
+  "footer": {
+    "vnxProduct": "producto VNX",
+    "poweredBy": "Impulsado por",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. Todos los derechos reservados.",
+    "twitter": "Síguenos en Twitter",
+    "linkedin": "Conéctate en LinkedIn",
+    "facebook": "Danos me gusta en Facebook"
+  },
+  "language": {
+    "switch": "Idioma",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文"
+  }
+}
 
