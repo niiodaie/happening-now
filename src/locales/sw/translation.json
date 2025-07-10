@@ -1,1 +1,65 @@
+{
+  "app": {
+    "title": "Inahitaji Sasa",
+    "subtitle": "Masasisho ya habari za wakati halisi",
+    "lastUpdated": "Imesasishwa mwisho: {{time}}",
+    "refresh": "Onyesha Upya",
+    "archive": "Kumbukumbu",
+    "showingArticles": "Inaonyesha makala {{count}}",
+    "showingArticles_plural": "Inaonyesha makala {{count}}",
+    "taggedWith": "zilizowekwa alama na \"{{tag}}\"",
+    "noArticlesFound": "Hakuna makala zilizopatikana",
+    "noArticlesAvailable": "Hakuna makala za habari zinazopatikana kwa sasa.",
+    "noArticlesForTag": "Hakuna makala zilizopatikana kwa \"{{tag}}\".",
+    "refreshNews": "Onyesha Habari Upya",
+    "tryAgain": "Jaribu Tena",
+    "failedToLoad": "Imeshindwa kupakia habari"
+  },
+  "trending": {
+    "title": "Kinachojadiliwa Sasa",
+    "mentions": "Matajwa {{count}} kutoka {{source}}"
+  },
+  "subscription": {
+    "title": "Jiandikishe kwa Habari za Mijadala ya Kila Siku",
+    "description": "Pata mada zinazojadiliwa zaidi zipelekwe kwenye sanduku lako la barua kila asubuhi",
+    "placeholder": "Ingiza anwani yako ya barua pepe",
+    "subscribe": "Jiandikishe Sasa",
+    "subscribing": "Inajiandikisha...",
+    "subscribed": "Umejiandikisha!",
+    "success": "✅ Umejiandikisha kwa mafanikio! Utapokea masasisho ya habari za mijadala ya kila siku.",
+    "error": "❌ Hitilafu ya mtandao. Tafadhali jaribu tena.",
+    "invalidEmail": "Tafadhali ingiza anwani halali ya barua pepe",
+    "enterEmail": "Tafadhali ingiza anwani yako ya barua pepe",
+    "confirmation": "📧 Angalia barua pepe yako kwa uthibitisho. Unaweza kujiondoa wakati wowote.",
+    "privacy": "🔒 Tunaheshimu faragha yako. Hakuna barua taka, jiondoe wakati wowote."
+  },
+  "newsCard": {
+    "readMore": "Soma Zaidi",
+    "ago": "iliyopita",
+    "minutes": "dakika {{count}}",
+    "hours": "saa {{count}}",
+    "days": "siku {{count}}"
+  },
+  "footer": {
+    "vnxProduct": "bidhaa ya VNX",
+    "poweredBy": "Inaendeshwa na",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. Haki zote zimehifadhiwa.",
+    "twitter": "Tufuate kwenye Twitter",
+    "linkedin": "Unganisha kwenye LinkedIn",
+    "facebook": "Tupende kwenye Facebook"
+  },
+  "language": {
+    "switch": "Lugha",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文",
+    "swahili": "Kiswahili",
+    "hindi": "हिन्दी",
+    "portuguese": "Português",
+    "arabic": "العربية"
+  }
+}
 
