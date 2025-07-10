@@ -10,11 +10,9 @@ import { SubscribeForm } from './components/SubscribeForm'
 import Footer from './components/Footer'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import LoadingFallback from './components/LoadingFallback'
-import HotDeals from './components/HotDeals'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
-import { Badge } from './components/ui/badge'
-import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, Share, Flame, Zap } from 'lucide-react'
+import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, Share } from 'lucide-react'
 
 // Temporarily disabled AdSlot components to fix 400 errors
 const HeaderAd = () => null
@@ -46,7 +44,6 @@ function App() {
   const [isOnline, setIsOnline] = useState(navigator?.onLine ?? true)
   const [appError, setAppError] = useState(null)
   const [geoLocationError, setGeoLocationError] = useState(null)
-  const [isHotDealsOpen, setIsHotDealsOpen] = useState(false)
   
   // Enhanced safe geo-location hook usage with error handling
   useEffect(() => {
@@ -273,25 +270,6 @@ function App() {
     }
   }
 
-  // Hot Deals handlers
-  const handleOpenHotDeals = () => {
-    try {
-      setIsHotDealsOpen(true)
-      logError('HotDeals', 'Hot deals opened')
-    } catch (error) {
-      logError('HotDeals', error)
-    }
-  }
-
-  const handleCloseHotDeals = () => {
-    try {
-      setIsHotDealsOpen(false)
-      logError('HotDeals', 'Hot deals closed')
-    } catch (error) {
-      logError('HotDeals', error)
-    }
-  }
-
   // Offline state with enhanced error info
   if (!isOnline) {
     return (
@@ -388,21 +366,6 @@ function App() {
               >
                 <Share className="h-4 w-4" />
                 <span className="hidden sm:inline">Share</span>
-              </Button>
-              
-              {/* Hot Deals Button in Header */}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleOpenHotDeals}
-                className="flex items-center gap-2 border-orange-200 text-orange-600 hover:bg-orange-50"
-                title="View hot deals"
-              >
-                <Flame className="h-4 w-4" />
-                <span className="hidden sm:inline">Hot Deals</span>
-                <Badge className="bg-red-100 text-red-700 border-red-200 ml-1 hidden sm:inline-flex text-xs">
-                  NEW
-                </Badge>
               </Button>
               
               {lastUpdated && (
@@ -555,30 +518,6 @@ function App() {
 
       {/* Footer */}
       <Footer />
-
-      {/* Floating Hot Deals Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <Button
-          onClick={handleOpenHotDeals}
-          className="bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-full p-4 group"
-          title="View hot deals"
-        >
-          <div className="flex items-center gap-2">
-            <Flame className="h-5 w-5 group-hover:animate-pulse" />
-            <span className="font-bold text-sm hidden sm:inline">Hot Deals</span>
-            <Badge className="bg-white/20 text-white border-white/30 animate-pulse ml-1 hidden sm:inline-flex">
-              <Zap className="h-3 w-3 mr-1" />
-              NEW
-            </Badge>
-          </div>
-        </Button>
-      </div>
-
-      {/* Hot Deals Modal */}
-      <HotDeals 
-        isOpen={isHotDealsOpen} 
-        onClose={handleCloseHotDeals} 
-      />
     </div>
   )
 }
