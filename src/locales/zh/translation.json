@@ -1,1 +1,61 @@
+{
+  "app": {
+    "title": "正在发生",
+    "subtitle": "实时新闻更新",
+    "lastUpdated": "最后更新：{{time}}",
+    "refresh": "刷新",
+    "archive": "存档",
+    "showingArticles": "显示 {{count}} 篇文章",
+    "showingArticles_plural": "显示 {{count}} 篇文章",
+    "taggedWith": "标记为 \"{{tag}}\"",
+    "noArticlesFound": "未找到文章",
+    "noArticlesAvailable": "当前没有可用的新闻文章。",
+    "noArticlesForTag": "未找到 \"{{tag}}\" 的文章。",
+    "refreshNews": "刷新新闻",
+    "tryAgain": "重试",
+    "failedToLoad": "加载新闻失败"
+  },
+  "trending": {
+    "title": "当前热点",
+    "mentions": "来自 {{source}} 的 {{count}} 次提及"
+  },
+  "subscription": {
+    "title": "订阅每日热门新闻",
+    "description": "每天早上将最热门的话题发送到您的收件箱",
+    "placeholder": "输入您的电子邮件地址",
+    "subscribe": "立即订阅",
+    "subscribing": "订阅中...",
+    "subscribed": "已订阅！",
+    "success": "✅ 订阅成功！您将收到每日热门新闻更新。",
+    "error": "❌ 网络错误。请重试。",
+    "invalidEmail": "请输入有效的电子邮件地址",
+    "enterEmail": "请输入您的电子邮件地址",
+    "confirmation": "📧 请查看您的电子邮件进行确认。您可以随时取消订阅。",
+    "privacy": "🔒 我们尊重您的隐私。无垃圾邮件，随时取消订阅。"
+  },
+  "newsCard": {
+    "readMore": "阅读更多",
+    "ago": "前",
+    "minutes": "{{count}}分钟",
+    "hours": "{{count}}小时",
+    "days": "{{count}}天"
+  },
+  "footer": {
+    "vnxProduct": "VNX 产品",
+    "poweredBy": "技术支持",
+    "visnecGlobal": "Visnec Global",
+    "copyright": "© 2024 Visnec Global. 保留所有权利。",
+    "twitter": "在 Twitter 上关注我们",
+    "linkedin": "在 LinkedIn 上联系",
+    "facebook": "在 Facebook 上点赞"
+  },
+  "language": {
+    "switch": "语言",
+    "english": "English",
+    "french": "Français",
+    "spanish": "Español",
+    "german": "Deutsch",
+    "chinese": "中文"
+  }
+}
 
