@@ -1,4 +1,4 @@
-mport { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNews } from './hooks/useNews'
 import useGeoLocation from './hooks/useGeoLocation'
