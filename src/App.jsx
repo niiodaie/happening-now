@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNews } from './hooks/useNews'
-import { useGeoLocation } from './hooks/useGeoLocation'
+import useGeoLocation from './hooks/useGeoLocation'
 import { NewsCard } from './components/NewsCard'
 import { FilterTabs } from './components/FilterTabs'
 import { TrendingTopics } from './components/TrendingTopics'
