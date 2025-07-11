@@ -1,16 +1,12 @@
 {
   "name": "happening-now",
-  "private": true,
   "version": "1.0.0",
-  "type": "module",
-  "description": "Real-time news application with trending topics and email subscriptions",
+  "private": true,
   "scripts": {
-    "postinstall": "npm install terser",
     "dev": "vite",
-    "build": "vite build --debug",
+    "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint .",
-    "postinstall": "npx terser -V || echo '⚠️ terser not found!'"
+    "postinstall": "npm install terser"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -21,7 +17,9 @@
     "tailwind-merge": "^2.5.4",
     "i18next": "^23.7.6",
     "react-i18next": "^13.5.0",
-    "i18next-browser-languagedetector": "^7.2.0"
+    "i18next-browser-languageDetector": "^7.2.0",
+    "tailwindcss": "^4.0.0-alpha.30",
+    "terser": "^5.28.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
@@ -34,9 +32,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.12.0",
     "vite": "^6.0.1",
-    "@tailwindcss/vite": "^4.0.0-alpha.30",
-    "tailwindcss": "^4.0.0-alpha.30",
-    "terser": "^5.28.0"
+    "@tailwindcss/vite": "^4.0.0-alpha.30"
   },
   "engines": {
     "node": ">=18.0.0"
