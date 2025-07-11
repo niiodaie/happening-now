@@ -108,9 +108,10 @@ function App() {
         <Card className="max-w-md mx-4 border-red-200">
           <CardContent className="text-center p-8">
             <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Something went wrong</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">{t('app.failedToLoad')}</h2>
             <p className="text-gray-600 mb-4">{appError}</p>
-            <Button onClick={handleRefresh}>Refresh Page</Button>
+            <Button onClick={handleRefresh}>{t('app.refresh')}</Button>
+
           </CardContent>
         </Card>
       </div>
