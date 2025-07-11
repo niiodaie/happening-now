@@ -19,7 +19,7 @@
     "tailwind-merge": "^2.5.4",
     "i18next": "^23.7.6",
     "react-i18next": "^13.5.0",
-    "i18next-browser-languagedetector": "^7.2.0"
+    "i18next-browser-languagedetector": "^7.2.0",
     "tailwindcss": "^4.0.0-alpha.30",
   },
   "devDependencies": {
