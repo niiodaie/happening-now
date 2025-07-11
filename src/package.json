@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Real-time news application with trending topics and email subscriptions",
   "scripts": {
+    "postinstall": "npm install terser",
     "dev": "vite",
     "build": "vite build --debug",
     "preview": "vite preview",
