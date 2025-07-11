@@ -6,7 +6,7 @@
   "description": "Real-time news application with trending topics and email subscriptions",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --debug",
     "lint": "eslint .",
     "preview": "vite preview"
   },
