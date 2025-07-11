@@ -129,7 +129,7 @@ function App() {
             <LanguageSwitcher />
             <Button onClick={handleRefresh} disabled={refreshing}>
               <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              Refresh
+              {t('app.refresh')}
             </Button>
           </div>
         </div>
