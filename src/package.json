@@ -34,8 +34,8 @@
     "globals": "^15.12.0",
     "vite": "^6.0.1",
     "@tailwindcss/vite": 
-    "^4.0.0-alpha.30
-     "terser": "^5.28.0"
+    "@tailwindcss/vite": "^4.0.0-alpha.30",
+    "terser": "^5.28.0"
   },
   "engines": {
     "node": ">=18.0.0"
