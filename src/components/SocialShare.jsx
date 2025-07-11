@@ -116,6 +116,7 @@ const SocialShare = ({
   );
 };
 
-export { SocialShare };
+export default SocialShare;
+
 
 
