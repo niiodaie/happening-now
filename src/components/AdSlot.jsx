@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const AdSlot = ({ 
   slot = '1234567890', 
@@ -7,61 +7,16 @@ const AdSlot = ({
   style = { display: 'block', textAlign: 'center' },
   className = 'my-4'
 }) => {
-  const [adError, setAdError] = useState(false);
-  const [isProduction, setIsProduction] = useState(false);
-
   useEffect(() => {
-    // Check if we're in production and AdSense is properly configured
-    const checkAdSenseAvailability = () => {
-      try {
-        // Only load ads in production with proper configuration
-        const isProductionEnv = process.env.NODE_ENV === 'production';
-        const hasAdSenseScript = document.querySelector('script[src*="adsbygoogle"]');
-        const hasValidPublisherId = slot && slot !== '1234567890'; // Check for real slot ID
-        
-        setIsProduction(isProductionEnv && hasAdSenseScript && hasValidPublisherId);
-        
-        if (isProductionEnv && hasAdSenseScript && hasValidPublisherId) {
-          // Push ad to AdSense queue only if everything is properly configured
-          if (window.adsbygoogle && Array.isArray(window.adsbygoogle)) {
-            window.adsbygoogle.push({});
-          }
-        }
-      } catch (error) {
-        console.log('AdSense configuration error:', error.message);
-        setAdError(true);
+    try {
+      // Push ad to AdSense queue
+      if (window.adsbygoogle && window.adsbygoogle.push) {
+        window.adsbygoogle.push({});
       }
-    };
-
-    // Delay execution to ensure DOM is ready
-    const timer = setTimeout(checkAdSenseAvailability, 100);
-    
-    return () => clearTimeout(timer);
-  }, [slot]);
-
-  // Don't render ads in development or if there's an error
-  if (process.env.NODE_ENV === 'development' || adError || !isProduction) {
-    return (
-      <div className={className}>
-        <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-500">
-          <div className="text-sm font-medium">
-            {process.env.NODE_ENV === 'development' 
-              ? 'AdSense Placeholder (Development)' 
-              : adError 
-                ? 'Ad Loading Error' 
-                : 'Ad Slot (Production Only)'}
-          </div>
-          <div className="text-xs mt-1">Slot: {slot}</div>
-          <div className="text-xs">Format: {format}</div>
-          {adError && (
-            <div className="text-xs text-red-500 mt-1">
-              Check AdSense configuration
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+    } catch (error) {
+      console.log('AdSense error:', error);
+    }
+  }, []);
 
   return (
     <div className={className}>
@@ -73,18 +28,21 @@ const AdSlot = ({
         data-ad-format={format}
         data-full-width-responsive={responsive}
       />
+      
+      {/* Fallback placeholder for development/testing */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center text-gray-500">
+          <div className="text-sm font-medium">AdSense Placeholder</div>
+          <div className="text-xs mt-1">Slot: {slot}</div>
+          <div className="text-xs">Format: {format}</div>
+        </div>
+      )}
     </div>
   );
 };
 
-// Specific ad slot components for different placements - temporarily disabled
-export const HeaderAd = () => null;
-export const SidebarAd = () => null;
-export const ArticleAd = () => null;
-export const FooterAd = () => null;
-
-// Alternative: Safe ad components that only show in production with proper setup
-export const SafeHeaderAd = () => (
+// Specific ad slot components for different placements
+export const HeaderAd = () => (
   <AdSlot 
     slot="1111111111" 
     format="horizontal"
@@ -93,7 +51,7 @@ export const SafeHeaderAd = () => (
   />
 );
 
-export const SafeSidebarAd = () => (
+export const SidebarAd = () => (
   <AdSlot 
     slot="2222222222" 
     format="rectangle"
@@ -102,7 +60,7 @@ export const SafeSidebarAd = () => (
   />
 );
 
-export const SafeArticleAd = () => (
+export const ArticleAd = () => (
   <AdSlot 
     slot="3333333333" 
     format="fluid"
@@ -111,7 +69,7 @@ export const SafeArticleAd = () => (
   />
 );
 
-export const SafeFooterAd = () => (
+export const FooterAd = () => (
   <AdSlot 
     slot="4444444444" 
     format="horizontal"

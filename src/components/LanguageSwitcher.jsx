@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Globe, ChevronDown } from 'lucide-react';
-import { Button } from './ui/button';
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Globe, ChevronDown } from 'lucide-react'
+import { Button } from './ui/button'
 
-const LanguageSwitcher = () => {
-  const { i18n, t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
+export function LanguageSwitcher() {
+  const { i18n, t } = useTranslation()
+  const [isOpen, setIsOpen] = useState(false)
 
   const languages = [
-    { code: 'en', name: t('language.english'), flag: '🇺🇸' },
-    { code: 'fr', name: t('language.french'), flag: '🇫🇷' },
-    { code: 'es', name: t('language.spanish'), flag: '🇪🇸' },
-    { code: 'de', name: t('language.german'), flag: '🇩🇪' },
-    { code: 'zh', name: t('language.chinese'), flag: '🇨🇳' },
-    { code: 'sw', name: t('language.swahili'), flag: '🇰🇪' },
-    { code: 'hi', name: t('language.hindi'), flag: '🇮🇳' },
-    { code: 'pt', name: t('language.portuguese'), flag: '🇵🇹' },
-    { code: 'ar', name: t('language.arabic'), flag: '🇸🇦' }
-  ];
+    { code: 'en', name: t('language.english', 'English'), flag: '🇺🇸' },
+    { code: 'fr', name: t('language.french', 'French'), flag: '🇫🇷' },
+    { code: 'es', name: t('language.spanish', 'Spanish'), flag: '🇪🇸' },
+    { code: 'de', name: t('language.german', 'German'), flag: '🇩🇪' },
+    { code: 'zh', name: t('language.chinese', 'Chinese'), flag: '🇨🇳' },
+    { code: 'sw', name: t('language.swahili', 'Swahili'), flag: '🇰🇪' },
+    { code: 'hi', name: t('language.hindi', 'Hindi'), flag: '🇮🇳' },
+    { code: 'pt', name: t('language.portuguese', 'Portuguese'), flag: '🇵🇹' },
+    { code: 'ar', name: t('language.arabic', 'Arabic'), flag: '🇸🇦' }
+  ]
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0]
 
   const changeLanguage = (langCode) => {
-    i18n.changeLanguage(langCode);
-    setIsOpen(false);
-  };
+    i18n.changeLanguage(langCode)
+    setIsOpen(false)
+  }
 
   return (
     <div className="relative">
@@ -53,7 +53,7 @@ const LanguageSwitcher = () => {
           {/* Dropdown */}
           <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1">
             <div className="px-3 py-2 text-xs font-medium text-gray-500 border-b border-gray-100">
-              {t('language.switch')}
+              {t('language.switch', 'Switch Language')}
             </div>
             {languages.map((language) => (
               <button
@@ -76,8 +76,6 @@ const LanguageSwitcher = () => {
         </>
       )}
     </div>
-  );
-};
-
-export default LanguageSwitcher;
+  )
+}
 
