@@ -50,14 +50,21 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (navigator.onLine && refetch) {
-        refetch()
-      }
-    }, 10 * 60 * 1000) // every 10 minutes
-    return () => clearInterval(interval)
-  }, [refetch])
+  // 🔁 Auto-refresh logic (every 10 minutes)
+useEffect(() => {
+  const interval = setInterval(() => {
+    if (navigator.onLine && refetch) {
+      refetch()
+    }
+  }, 10 * 60 * 1000)
+  return () => clearInterval(interval)
+}, [refetch])
+
+// 🌐 Set <html lang> and direction dynamically
+useEffect(() => {
+  document.documentElement.lang = i18n.language
+  document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr'
+}, [i18n.language])
 
   const handleRefresh = async () => {
     try {
