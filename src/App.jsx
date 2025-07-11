@@ -93,8 +93,8 @@ function App() {
         <Card className="max-w-md mx-4">
           <CardContent className="text-center p-8">
             <WifiOff className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">You're offline</h2>
-            <p className="text-gray-600 mb-4">Check your internet connection and try again.</p>
+            className="text-xl font-semibold text-gray-900 mb-2">{t('app.failedToLoad')}</h2>
+            <p className="text-gray-600 mb-4">{t('app.noArticlesAvailable')}</p>
             <Button onClick={() => window.location.reload()}>Try Again</Button>
           </CardContent>
         </Card>
