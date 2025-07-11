@@ -9,7 +9,8 @@ export default defineConfig({
   base: '/',
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
+      '@lib': path.resolve(__dirname, './src/lib'), // optional: direct alias for lib folder
     },
   },
   build: {
@@ -43,7 +44,14 @@ export default defineConfig({
     host: true
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'lucide-react', 'react-i18next']
+    include: [
+      'react',
+      'react-dom',
+      'lucide-react',
+      'react-i18next',
+      'i18next',
+      '@/lib/utils',
+      '@/lib/shareUtils'
+    ]
   }
 })
-
