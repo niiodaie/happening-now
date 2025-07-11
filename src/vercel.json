@@ -2,7 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
-  "installCommand": "npm install",
+  "installCommand": "npm install && npm install terser",
   "framework": "vite",
   "rewrites": [
     {
@@ -29,4 +29,3 @@
     "NEWSAPI_KEY": "e5d61af9dc354abfa6e2f7a009ba6daf"
   }
 }
-
