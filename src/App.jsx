@@ -9,8 +9,8 @@ import { TrendingTopics } from './components/TrendingTopics'
 import { SubscribeForm } from './components/SubscribeForm'
 import { Footer } from './components/Footer'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
-import AdSlot from './components/AdSlot';
-import LoadingFallback from './components/LoadingFallback';
+import { AdSlot } from './components/AdSlot'
+import { LoadingFallback } from './components/LoadingFallback'
 import { Button } from './components/ui/button'
 import { Card, CardContent } from './components/ui/card'
 import { Newspaper, RefreshCw, Clock, AlertCircle, Wifi, WifiOff, MapPin, Globe } from 'lucide-react'

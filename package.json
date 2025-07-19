@@ -6,24 +6,23 @@
   "description": "Real-time news application with trending topics and email subscriptions",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --debug",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "i18next": "^23.7.6",
-    "i18next-browser-languagedetector": "^7.2.0",
-    "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "lucide-react": "^0.468.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "i18next": "^23.7.6",
     "react-i18next": "^13.5.0",
-    "tailwind-merge": "^2.5.4"
+    "i18next-browser-languagedetector": "^7.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
-    "@tailwindcss/vite": "^4.0.0-alpha.30",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
@@ -32,11 +31,12 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.12.0",
-    "tailwindcss": "^4.0.0-alpha.30",
-    "terser": "^5.43.1",
-    "vite": "^6.0.1"
+    "vite": "^6.0.1",
+    "@tailwindcss/vite": "^4.0.0-alpha.30",
+    "tailwindcss": "^4.0.0-alpha.30"
   },
   "engines": {
     "node": ">=18.0.0"
   }
 }
+

@@ -5,7 +5,7 @@ import { shareToSocialMedia, shareNewsToWhatsApp, copyToClipboard } from '@/lib/
 
 const SocialShare = ({ 
   article,
-  url = window.location.href,
+  url = window.location.href, 
   title = '', 
   description = '',
   className = 'flex gap-2 mt-3'
@@ -20,11 +20,32 @@ const SocialShare = ({
     }
   };
 
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: title,
+          text: description,
+          url: url,
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+        // Fallback to WhatsApp
+        if (article) {
+          shareNewsToWhatsApp(article);
+        }
+      }
+    } else {
+      // Fallback to copying URL to clipboard
+      handleCopyLink();
+    }
+  };
+
   const handleCopyLink = async () => {
-    const shareText = article
+    const shareText = article 
       ? `${title}\n\n${description}\n\n${url}`
       : `${title} - ${url}`;
-
+    
     const success = await copyToClipboard(shareText);
     if (success) {
       setCopied(true);
@@ -32,24 +53,11 @@ const SocialShare = ({
     }
   };
 
-  const handleNativeShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, text: description, url });
-      } catch (err) {
-        console.log('Native share failed, fallback to WhatsApp.');
-        if (article) shareNewsToWhatsApp(article);
-      }
-    } else {
-      handleCopyLink();
-    }
-  };
-
   return (
     <div className={className}>
       <div className="flex items-center gap-2 text-sm">
         <span className="text-gray-500 font-medium">Share:</span>
-
+        
         <Button
           variant="ghost"
           size="sm"
@@ -59,7 +67,7 @@ const SocialShare = ({
         >
           <MessageCircle className="h-4 w-4" />
         </Button>
-
+        
         <Button
           variant="ghost"
           size="sm"
@@ -69,7 +77,7 @@ const SocialShare = ({
         >
           <Twitter className="h-4 w-4" />
         </Button>
-
+        
         <Button
           variant="ghost"
           size="sm"
@@ -79,7 +87,7 @@ const SocialShare = ({
         >
           <Facebook className="h-4 w-4" />
         </Button>
-
+        
         <Button
           variant="ghost"
           size="sm"
@@ -87,9 +95,13 @@ const SocialShare = ({
           className="h-8 px-2 text-gray-600 hover:text-gray-700 hover:bg-gray-50"
           title="Copy link"
         >
-          {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+          {copied ? (
+            <Check className="h-4 w-4 text-green-600" />
+          ) : (
+            <Copy className="h-4 w-4" />
+          )}
         </Button>
-
+        
         <Button
           variant="ghost"
           size="sm"
@@ -105,3 +117,4 @@ const SocialShare = ({
 };
 
 export default SocialShare;
+

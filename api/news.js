@@ -17,31 +17,21 @@ export default async function handler(req, res) {
   try {
     const NEWSAPI_KEY = process.env.NEWSAPI_KEY || 'e5d61af9dc354abfa6e2f7a009ba6daf'
     
-    // Try to fetch from NewsAPI with better error handling
+    // Try to fetch from NewsAPI
     const newsResponse = await fetch(
       `https://newsapi.org/v2/top-headlines?country=us&pageSize=20&apiKey=${NEWSAPI_KEY}`,
       {
         headers: {
           'User-Agent': 'HappeningNow/1.0'
-        },
-        timeout: 10000 // 10 second timeout
+        }
       }
     )
 
-    let newsData
-    const responseText = await newsResponse.text()
-    
-    try {
-      newsData = JSON.parse(responseText)
-    } catch (parseError) {
-      console.error('JSON parse error:', parseError, 'Response:', responseText.substring(0, 200))
-      throw new Error('Invalid JSON response from NewsAPI')
-    }
-
-    if (newsResponse.ok && newsData.status === 'ok') {
+    if (newsResponse.ok) {
+      const newsData = await newsResponse.json()
+      
       // Transform NewsAPI data to our format
       const articles = newsData.articles?.map((article, index) => ({
-        id: `news-${index}`,
         title: article.title,
         summary: article.description || article.content?.substring(0, 200) + '...',
         url: article.url,
@@ -51,11 +41,7 @@ export default async function handler(req, res) {
         publishedAt: article.publishedAt,
         tags: categorizeArticle(article.title + ' ' + (article.description || '')),
         slug: generateSlug(article.title)
-      })).filter(article => 
-        article.title && 
-        !article.title.includes('[Removed]') && 
-        article.title !== 'null'
-      ) || []
+      })).filter(article => article.title && !article.title.includes('[Removed]')) || []
 
       return res.status(200).json({
         status: 'success',
@@ -64,15 +50,14 @@ export default async function handler(req, res) {
         source: 'NewsAPI'
       })
     } else {
-      throw new Error(`NewsAPI error: ${newsResponse.status} - ${newsData.message || 'Unknown error'}`)
+      throw new Error(`NewsAPI error: ${newsResponse.status}`)
     }
   } catch (error) {
-    console.error('NewsAPI failed, using mock data:', error.message)
+    console.error('NewsAPI failed, using mock data:', error)
     
-    // Fallback to mock data with proper structure
+    // Fallback to mock data
     const mockArticles = [
       {
-        id: "mock-1",
         title: "Breaking: Major Tech Company Announces Revolutionary AI Breakthrough",
         summary: "Scientists demonstrate unprecedented problem-solving abilities in artificial intelligence, marking a significant leap forward in machine learning technology.",
         url: "https://example.com/ai-breakthrough",
@@ -84,7 +69,6 @@ export default async function handler(req, res) {
         slug: "major-tech-company-ai-breakthrough"
       },
       {
-        id: "mock-2",
         title: "Global Climate Summit Reaches Historic Agreement on Carbon Reduction",
         summary: "World leaders commit to ambitious new targets for reducing greenhouse gas emissions by 2030, with unprecedented international cooperation.",
         url: "https://example.com/climate-summit",
@@ -96,7 +80,6 @@ export default async function handler(req, res) {
         slug: "global-climate-summit-historic-agreement"
       },
       {
-        id: "mock-3",
         title: "Stock Markets Surge as Tech Giants Report Record Earnings",
         summary: "Major technology companies exceed expectations in quarterly reports, driving significant gains across global financial markets.",
         url: "https://example.com/stock-markets-surge",
@@ -108,7 +91,6 @@ export default async function handler(req, res) {
         slug: "stock-markets-surge-tech-giants-earnings"
       },
       {
-        id: "mock-4",
         title: "New Medical Treatment Shows Promise for Rare Disease",
         summary: "Clinical trials demonstrate significant improvement in patients with previously untreatable genetic condition, offering hope to thousands.",
         url: "https://example.com/medical-treatment-rare-disease",
@@ -120,7 +102,6 @@ export default async function handler(req, res) {
         slug: "medical-treatment-promise-rare-disease"
       },
       {
-        id: "mock-5",
         title: "Major Sports Championship Finals Draw Record Viewership",
         summary: "The championship game attracts over 100 million viewers worldwide, setting new records for sports broadcasting and streaming platforms.",
         url: "https://example.com/sports-championship-finals",
@@ -132,7 +113,6 @@ export default async function handler(req, res) {
         slug: "sports-championship-finals-record-viewership"
       },
       {
-        id: "mock-6",
         title: "Breakthrough in Quantum Computing Achieved by Research Team",
         summary: "Scientists demonstrate stable quantum entanglement at room temperature, potentially revolutionizing computing and communication technologies.",
         url: "https://example.com/quantum-computing-breakthrough",
