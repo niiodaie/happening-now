@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import AdSlot from './components/AdSlot'
 
 const AdSlot = ({ 
   slot = '1234567890', 
