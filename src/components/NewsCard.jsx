@@ -2,8 +2,7 @@ import { Card, CardContent, CardHeader } from './ui/card'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Clock, ExternalLink, Share, User } from 'lucide-react'
-import { SocialShare } from './SocialShare'
-
+import SocialShare from './SocialShare'
 // Format time ago helper
 const formatTimeAgo = (dateString) => {
   const now = new Date()
