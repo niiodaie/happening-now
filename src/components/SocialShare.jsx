@@ -43,9 +43,13 @@ const SocialShare = ({
 
   const handleCopyLink = async () => {
     const shareText = article 
-      ? `${title}\n\n${description}\n\n${url}`
+      ? `${title}
+
+${description}
+
+${url}`
       : `${title} - ${url}`;
-    
+
     const success = await copyToClipboard(shareText);
     if (success) {
       setCopied(true);
@@ -57,7 +61,7 @@ const SocialShare = ({
     <div className={className}>
       <div className="flex items-center gap-2 text-sm">
         <span className="text-gray-500 font-medium">Share:</span>
-        
+
         <Button
           variant="ghost"
           size="sm"
@@ -67,7 +71,7 @@ const SocialShare = ({
         >
           <MessageCircle className="h-4 w-4" />
         </Button>
-        
+
         <Button
           variant="ghost"
           size="sm"
@@ -77,7 +81,7 @@ const SocialShare = ({
         >
           <Twitter className="h-4 w-4" />
         </Button>
-        
+
         <Button
           variant="ghost"
           size="sm"
@@ -87,7 +91,7 @@ const SocialShare = ({
         >
           <Facebook className="h-4 w-4" />
         </Button>
-        
+
         <Button
           variant="ghost"
           size="sm"
@@ -101,7 +105,7 @@ const SocialShare = ({
             <Copy className="h-4 w-4" />
           )}
         </Button>
-        
+
         <Button
           variant="ghost"
           size="sm"
@@ -117,4 +121,3 @@ const SocialShare = ({
 };
 
 export default SocialShare;
-
